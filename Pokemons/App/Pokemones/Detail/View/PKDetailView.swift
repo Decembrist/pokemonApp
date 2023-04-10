@@ -11,7 +11,7 @@ class PKDetailView: UIView {
     
     private var statisticView: PKStatisticBlockView?
     
-    private let imagePokemon: UIImageView = {
+    private lazy var imagePokemon: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
@@ -19,7 +19,7 @@ class PKDetailView: UIView {
         return image
     }()
     
-    private let bottomBackground: UIView = {
+    private lazy var bottomBackground: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -31,7 +31,7 @@ class PKDetailView: UIView {
         return view
     }()
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.textAlignment = .center

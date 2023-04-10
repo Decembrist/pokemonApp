@@ -6,7 +6,7 @@ final class PKListViewCell: UICollectionViewCell {
     
     static let cellIdentifier = "PokemonListViewCell"
     
-    private let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
@@ -15,7 +15,7 @@ final class PKListViewCell: UICollectionViewCell {
         return image
     }()
     
-    private let nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let lable = UILabel()
         lable.textColor = .white
         lable.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +24,7 @@ final class PKListViewCell: UICollectionViewCell {
         return lable
     }()
     
-    private let backGroundView: UIView = {
+    private lazy var backGroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
@@ -32,7 +32,7 @@ final class PKListViewCell: UICollectionViewCell {
         return view
     }()
     
-    private let stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -45,7 +45,9 @@ final class PKListViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setUpView()
+        addSubviews()
+        setUpLayer()
+        addConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -76,15 +78,21 @@ final class PKListViewCell: UICollectionViewCell {
         
     }
     
-    private func setUpView() {
-        contentView.addSubview(backGroundView)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(stackView)
-        contentView.addSubview(imageView)
-
+    private func addSubviews() {
+        [
+            backGroundView,
+            nameLabel,
+            stackView,
+            imageView
+        ].forEach { contentView.addSubview($0) }
+    }
+    
+    private func setUpLayer() {
         contentView.layer.cornerRadius = 8
         contentView.clipsToBounds = true
-        
+    }
+    
+    private func addConstraints() {
         NSLayoutConstraint.activate([
             nameLabel.heightAnchor.constraint(equalToConstant: 30),
             nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),

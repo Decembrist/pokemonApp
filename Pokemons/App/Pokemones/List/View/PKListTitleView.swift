@@ -2,7 +2,7 @@ import UIKit
 
 final class PKListTitleView: UIView {
     
-    private let titleLable: UILabel = {
+    private lazy var titleLable: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 22, weight: .bold)

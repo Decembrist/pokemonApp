@@ -49,12 +49,23 @@ final class PKListView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        setDelegate()
         
         addSubview(collectionView)
         
-        
+        addConstraint()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    private func setDelegate() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    private func addConstraint() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
@@ -63,11 +74,6 @@ final class PKListView: UIView {
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
-    /// func
     public func setPokemonList(_ pokemonList: [PokemonModel]) {
         self.pokemonList = pokemonList
     }

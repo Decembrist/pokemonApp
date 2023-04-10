@@ -3,7 +3,7 @@ import UIKit
 final class PKFooterLoadingCollectionReusableView: UICollectionReusableView {
     static let identifire = "PKFooterLoadingCollectionReusableView"
     
-    private let loader: UIActivityIndicatorView = {
+    private lazy var loader: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true

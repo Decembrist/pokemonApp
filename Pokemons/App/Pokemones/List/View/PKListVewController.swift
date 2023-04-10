@@ -14,10 +14,12 @@ final class PKListViewController: UIViewController {
     private let filterView = PKListFilterView()
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -28,7 +30,8 @@ final class PKListViewController: UIViewController {
         configurator.configure(with: self)
         
         setUpDelegate()
-        setUpView()
+        addSubviews()
+        addConstraints()
         setUpNavBar()
         
         /// fetching data
@@ -46,10 +49,13 @@ final class PKListViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
     }
     
-    private func setUpView() {
-        view.addSubview(filterView)
-        view.addSubview(titleView)
-        view.addSubview(pokemonListView)
+    private func addSubviews() {
+        [filterView, titleView, pokemonListView].forEach {
+            view.addSubview($0)
+        }
+    }
+    
+    private func addConstraints() {
         
         NSLayoutConstraint.activate([
             filterView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

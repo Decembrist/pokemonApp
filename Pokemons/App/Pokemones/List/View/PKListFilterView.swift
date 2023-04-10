@@ -20,14 +20,14 @@ final class PKListFilterView: UIView {
         }
     }
     
-    private let filterViewScrollContainer: UIView = {
+    private lazy var filterViewScrollContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-    private let filterClearButton: UIButton = {
+    private lazy var filterClearButton: UIButton = {
         
         var buttonConfiguration = UIButton.Configuration.gray()
         buttonConfiguration.cornerStyle = .capsule
@@ -40,7 +40,7 @@ final class PKListFilterView: UIView {
         return button
     }()
     
-    private let filterScrollView: UIScrollView = {
+    private lazy var filterScrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.showsHorizontalScrollIndicator = true
@@ -48,7 +48,7 @@ final class PKListFilterView: UIView {
         return scroll
     }()
     
-    private let stackScrollElementList: UIStackView = {
+    private lazy var stackScrollElementList: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
