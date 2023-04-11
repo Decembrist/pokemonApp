@@ -23,7 +23,7 @@
 		558BA8ED29C9CD9A00C57E83 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8EC29C9CD9A00C57E83 /* SettingsViewController.swift */; };
 		558BA8EF29C9D93800C57E83 /* PKListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8EE29C9D93800C57E83 /* PKListViewCell.swift */; };
 		558BA8F229C9E31B00C57E83 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 558BA8F129C9E31B00C57E83 /* Alamofire */; };
-		558BA8F729C9F5A600C57E83 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8F629C9F5A600C57E83 /* ImageLoader.swift */; };
+		558BA8F729C9F5A600C57E83 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8F629C9F5A600C57E83 /* HapticsManager.swift */; };
 		558BA8FA29C9FE2300C57E83 /* PokemonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8F929C9FE2300C57E83 /* PokemonModel.swift */; };
 		558BA8FC29C9FF2800C57E83 /* NameUrlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8FB29C9FF2800C57E83 /* NameUrlModel.swift */; };
 		558BA8FF29CA03D600C57E83 /* AllResponsePokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8FE29CA03D600C57E83 /* AllResponsePokemon.swift */; };
@@ -64,7 +64,7 @@
 		558BA8EA29C9B85900C57E83 /* TapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarController.swift; sourceTree = "<group>"; };
 		558BA8EC29C9CD9A00C57E83 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		558BA8EE29C9D93800C57E83 /* PKListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKListViewCell.swift; sourceTree = "<group>"; };
-		558BA8F629C9F5A600C57E83 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		558BA8F629C9F5A600C57E83 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
 		558BA8F929C9FE2300C57E83 /* PokemonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonModel.swift; sourceTree = "<group>"; };
 		558BA8FB29C9FF2800C57E83 /* NameUrlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameUrlModel.swift; sourceTree = "<group>"; };
 		558BA8FE29CA03D600C57E83 /* AllResponsePokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllResponsePokemon.swift; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 		558BA8F529C9F59700C57E83 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				558BA8F629C9F5A600C57E83 /* ImageLoader.swift */,
+				558BA8F629C9F5A600C57E83 /* HapticsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -358,7 +358,7 @@
 				558BA8FA29C9FE2300C57E83 /* PokemonModel.swift in Sources */,
 				55D32CFF29D6E453006D9C51 /* PKFooterLoadingCollectionReusableView.swift in Sources */,
 				5556D90929E5452B00E208BA /* PKPager.swift in Sources */,
-				558BA8F729C9F5A600C57E83 /* ImageLoader.swift in Sources */,
+				558BA8F729C9F5A600C57E83 /* HapticsManager.swift in Sources */,
 				558BA91C29D2EF2A00C57E83 /* AllResponseTypePokemon.swift in Sources */,
 				55D32D0E29DDD758006D9C51 /* PKDetailPresenter.swift in Sources */,
 				5556D8FE29E0482600E208BA /* PKRequest.swift in Sources */,

@@ -28,6 +28,9 @@ final class PKListPresenter: PKListPresenterProtocol {
     }
     
     func showPokemonDetail(_ pokemon: PokemonModel) {
+        
+        HapticsManager.shared.selectionVibrate()
+        
         router?.showPokemonDetail(for: pokemon)
     }
     

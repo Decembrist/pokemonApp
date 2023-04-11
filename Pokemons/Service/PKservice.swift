@@ -11,8 +11,7 @@ final class PKService {
         
         PKNetworkManager.shared.requestByModel(
             PKPager.pokemonNexPage ?? endpoint.endpoint,
-            excpecting: AllResponsePokemonModel.self,
-            qos: .userInteractive
+            excpecting: AllResponsePokemonModel.self
         ) { result in
             
             switch result {

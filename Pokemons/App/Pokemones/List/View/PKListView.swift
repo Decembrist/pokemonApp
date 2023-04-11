@@ -24,7 +24,7 @@ final class PKListView: UIView {
         pokemonList
     }
     
-    private let cellSize = CGSize(width: 186.5, height: 100)
+    private let cellSize = CGSize(width: 184, height: 100)
     
     private var showIndicatorLoader = false
     
@@ -33,9 +33,10 @@ final class PKListView: UIView {
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         layout.minimumInteritemSpacing = 0
+
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         /// register cell
         collectionView.register(PKListViewCell.self,
@@ -52,6 +53,7 @@ final class PKListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .white
         
         setDelegate()
         

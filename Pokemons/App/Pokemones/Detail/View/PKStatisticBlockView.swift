@@ -78,6 +78,7 @@ final class PKStatisticBlockView: UIView {
         
         stats.forEach { stat in
             let nameLabel = UILabel()
+            nameLabel.textColor = .black
             nameLabel.text = stat.stat.name
             
             stackName.addArrangedSubview(nameLabel)

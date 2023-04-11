@@ -7,6 +7,7 @@ final class PKListTitleView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 22, weight: .bold)
         label.text = "Pokemones"
+        label.textColor = .black
         
         return label
     }()

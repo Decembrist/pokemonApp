@@ -36,6 +36,7 @@ class PKDetailView: UIView {
         title.translatesAutoresizingMaskIntoConstraints = false
         title.textAlignment = .center
         title.font = .systemFont(ofSize: 22, weight: .medium)
+        title.textColor = .black
         
         return title
     }()

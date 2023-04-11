@@ -12,7 +12,7 @@ class TapBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UITabBar.appearance().backgroundColor = .systemBackground
+        UITabBar.appearance().backgroundColor = .white
         
         let startController = PKListViewController()
         let settingsController = SettingsViewController()
