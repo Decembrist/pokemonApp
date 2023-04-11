@@ -38,6 +38,16 @@ final class PKListViewController: UIViewController {
         retrivePokemonList()
         retriveType()
         
+//        PKService.getPokemons { result in
+//            switch result {
+//            case .success(let success):
+//                print(success)
+//                break
+//            case .failure(let failure):
+//                print(failure)
+//                break
+//            }
+//        }
     }
     
     private func setUpDelegate() {

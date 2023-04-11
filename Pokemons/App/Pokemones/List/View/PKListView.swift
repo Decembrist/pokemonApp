@@ -14,11 +14,13 @@ final class PKListView: UIView {
     
     public weak var delegate: PKListViewProtocol?
     
-    private var pokemonList: [PokemonModel] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+//    private var pokemonList: [PokemonModel] = [] {
+//        didSet {
+//            collectionView.reloadData()
+//        }
+//    }
+    
+    private var pokemonList: [PokemonModel] = []
     
     private let cellSize = CGSize(width: 186.5, height: 100)
     
@@ -75,7 +77,11 @@ final class PKListView: UIView {
     }
     
     public func setPokemonList(_ pokemonList: [PokemonModel]) {
-        self.pokemonList = pokemonList
+        for pokemon in pokemonList {
+            self.pokemonList.append(pokemon)
+        }
+        collectionView.reloadData()
+//        self.pokemonList = pokemonList
     }
     
     public func setIndicatorValue(_ value: Bool) {

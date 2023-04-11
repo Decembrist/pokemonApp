@@ -1,5 +1,5 @@
 import UIKit
-import Alamofire
+
 
 protocol PKListInteractorInputProtocol: AnyObject {
 
@@ -24,22 +24,9 @@ final class PKListInteractor: PKListInteractorInputProtocol {
     
     unowned var presenter: PKListInteractorOutputProtocol
     
-    private var pokemonList: [PokemonModel] = []
-    
-    private var urlPokemonList: String {
-        
-        guard let nextUrl = nextPage else {
-            return "https://pokeapi.co/api/v2/pokemon/"
-        }
-        
-        return nextUrl
-    }
-    
-    private var isLoadingMoreCharacters = false
-    private var nextPage: String?
-    private var needShowIndicator: Bool {
-        nextPage != nil
-    }
+    private var isLoadingMoreCharacters: Bool = false
+
+    private var needShowIndicator: Bool = false
     
     private let asyncEmitter = DispatchGroup()
     
@@ -59,65 +46,30 @@ final class PKListInteractor: PKListInteractorInputProtocol {
 
         isLoadingMoreCharacters = true
 
-        AF.request(urlPokemonList)
-            .responseDecodable(of:AllResponsePokemonModel.self, queue: .global(qos: .utility)) { [weak self] response in
+        PKService.getPokemonList { [weak self] responseModel in
             guard let strongSelf = self else {
                 return
             }
-            switch response.result {
-            case .success(let responseModel):
-
-                strongSelf.nextPage = responseModel.next
-
-                for pokemon in responseModel.results {
-                    strongSelf.fetchPokemonDetail(pokemon.url)
-                }
-
-                strongSelf.asyncEmitter.notify(queue: .main) {
-                    strongSelf.presenter.didRetrivePokemons(strongSelf.pokemonList)
-                    strongSelf.presenter.didRetriveLoadIndicator(strongSelf.needShowIndicator)
-                    strongSelf.isLoadingMoreCharacters = false
-                }
-            case .failure(let error):
-                print("fetch error:")
-                print(error)
-                break
+            
+            DispatchQueue.main.async {
+                strongSelf.presenter.didRetrivePokemons(responseModel.pokemonList)
             }
+            
+            guard let _ = responseModel.nextPage else { return }
+            
+            strongSelf.needShowIndicator = true
+            strongSelf.presenter.didRetriveLoadIndicator(true)
+            strongSelf.isLoadingMoreCharacters = false
         }
-    }
-    
-    private func fetchPokemonDetail(_ url: String) {
+        
 
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        self.asyncEmitter.enter()
-        AF.request(url)
-            .responseDecodable(of:PokemonModel.self, decoder: decoder) { [weak self] response in
-            defer {
-                self?.asyncEmitter.leave()
-            }
-            switch response.result {
-            case .success(let responseModel):
-                self?.pokemonList.append(responseModel)
-            case .failure(let error):
-                print("detail error:")
-                print(error)
-                break
-            }
-        }
     }
     
     func retriveType() {
-        AF.request("https://pokeapi.co/api/v2/type/")
-            .responseDecodable(of: AllResponseTypePokemon.self) { [weak self] response in
-                
-            switch response.result {
-            case .success(let responseModel):
-                self?.presenter.didRetriveType(responseModel.results.compactMap{ $0.nameCapitalized })
-            case .failure(let error):
-                print(error)
-                break
-            }
+        PKService.getPokemonTypeList { [weak self] typeList in
+            DispatchQueue.main.async {
+                self?.presenter.didRetriveType(typeList.compactMap{ $0.nameCapitalized })
+            }   
         }
     }
     

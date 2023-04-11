@@ -2,20 +2,22 @@ import UIKit
 import Alamofire
 
 
-final class PKService {
-    public static let shared = PKService()
+final class PKNetworkManager {
+    public static let shared = PKNetworkManager()
     
     private init() {}
     
-    public func execute<T: Decodable>(
-        _ request: PKRequest,
+    public func requestByModel<T: Decodable>(
+        _ endpoint: String,
         excpecting type: T.Type,
-        completion: @escaping (Result<T, AFError>) -> Void
+        completion: (@escaping (Result<T, Error>) -> Void)
     ) {
         let cacher = ResponseCacher(behavior: .cache)
-        AF.request("https://pokeapi.co/api/v2/type/")
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        AF.request(endpoint)
             .cacheResponse(using: cacher)
-            .responseDecodable(of: type.self) { response in
+            .responseDecodable(of: type.self, queue: .global(qos: .utility), decoder: decoder) { response in
                 
             switch response.result {
             case .success(let responseModel):
