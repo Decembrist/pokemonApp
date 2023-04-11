@@ -7,10 +7,8 @@ final class PKService {
     
     static func getPokemonList(completion: @escaping (PokemonResponseModel) -> Void) {
         
-        let endpoint: PKEndpoint = .pokemonList
-        
         PKNetworkManager.shared.requestByModel(
-            PKPager.pokemonNexPage ?? endpoint.endpoint,
+            PKPager.pokemonNexPage ?? PKEndpoint.pokemonList.endpoint,
             excpecting: AllResponsePokemonModel.self
         ) { result in
             
@@ -57,9 +55,7 @@ final class PKService {
     
     static func getPokemonTypeList(completion: @escaping ([NameUrlModel]) -> Void) {
         
-        let endpoint: PKEndpoint = .typeList
-        
-        PKNetworkManager.shared.requestByModel(endpoint.endpoint, excpecting: AllResponseTypePokemon.self, qos: .userInteractive) { result in
+        PKNetworkManager.shared.requestByModel(PKEndpoint.typeList.endpoint, excpecting: AllResponseTypePokemon.self, qos: .userInteractive) { result in
             switch result {
             case .success(let success):
                 completion(success.results)

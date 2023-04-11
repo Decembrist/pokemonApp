@@ -32,7 +32,7 @@ final class PKStatisticBlockView: UIView {
         rangeView.progress = Float(val) / 100
         rangeView.translatesAutoresizingMaskIntoConstraints = false
         rangeView.progressTintColor = progressColor
-        rangeView.trackTintColor = .systemGray3
+        rangeView.trackTintColor = .lightGray
         container.addSubview(rangeView)
         
         NSLayoutConstraint.activate([
@@ -50,7 +50,7 @@ final class PKStatisticBlockView: UIView {
     
     private func setUpLayer() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .white
+        backgroundColor = PKColorType.background
         layer.cornerRadius = 50
         layer.shadowOpacity = 0.2
         layer.shadowColor = UIColor.black.cgColor
@@ -86,6 +86,7 @@ final class PKStatisticBlockView: UIView {
         
         stats.forEach { stat in
             let valueLabel = UILabel()
+            valueLabel.textColor = .black
             valueLabel.text = "\(stat.baseStat)"
             
             stackValue.addArrangedSubview(valueLabel)

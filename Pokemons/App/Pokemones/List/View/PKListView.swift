@@ -24,8 +24,6 @@ final class PKListView: UIView {
         pokemonList
     }
     
-    private let cellSize = CGSize(width: 184, height: 100)
-    
     private var showIndicatorLoader = false
     
     private lazy var collectionView: UICollectionView = {
@@ -36,7 +34,7 @@ final class PKListView: UIView {
 
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = PKColorType.background
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         /// register cell
         collectionView.register(PKListViewCell.self,
@@ -53,7 +51,7 @@ final class PKListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .white
+        backgroundColor = PKColorType.background
         
         setDelegate()
         
@@ -148,7 +146,8 @@ extension PKListView: UICollectionViewDelegateFlowLayout, UICollectionViewDelega
                         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         
-        // print(view.bounds.width / 2) 196.5
-        return cellSize // create enum
+        let width = (bounds.width / 2) - 10
+        
+        return CGSize(width: width, height: 100) // create enum
     }
 }

@@ -1,10 +1,3 @@
-//
-//  PokemonDetailView.swift
-//  Pokemons
-//
-//  Created by Андрей Павлов on 28.03.2023.
-//
-
 import UIKit
 
 class PKDetailView: UIView {
@@ -22,7 +15,7 @@ class PKDetailView: UIView {
     private lazy var bottomBackground: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = PKColorType.background
         view.layer.cornerRadius = 40
         view.layer.shadowOpacity = 0.1
         view.layer.shadowColor = UIColor.black.cgColor
@@ -46,8 +39,8 @@ class PKDetailView: UIView {
         configButton.title = title
         configButton.cornerStyle = .capsule
         configButton.baseBackgroundColor = bgColor
-        configButton.baseForegroundColor = .black
-        configButton.image = UIImage(systemName: "flame.fill")
+        configButton.baseForegroundColor = PKColorType.background
+        configButton.image = UIImage(systemName: PKImageName.Pokemon.buttonType.name)
         configButton.imagePadding = 10
         configButton.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 30, bottom: 10, trailing: 30)
         

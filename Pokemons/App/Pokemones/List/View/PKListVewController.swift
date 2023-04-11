@@ -25,7 +25,7 @@ final class PKListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = PKColorType.background
         
         configurator.configure(with: self)
         
@@ -37,17 +37,6 @@ final class PKListViewController: UIViewController {
         /// fetching data
         retrivePokemonList()
         retriveType()
-        
-//        PKService.getPokemons { result in
-//            switch result {
-//            case .success(let success):
-//                print(success)
-//                break
-//            case .failure(let failure):
-//                print(failure)
-//                break
-//            }
-//        }
     }
     
     private func setUpDelegate() {
