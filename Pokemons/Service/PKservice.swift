@@ -9,7 +9,7 @@ final class PKService {
     
     static func getPokemonList(completion: @escaping (PokemonResponseModel) -> Void) {
         PKNetworkManager.shared.requestByModel(
-            nextPage ?? "https://pokeapi.co/api/v2/pokemon",
+            PKPager.pokemonNexPage ?? "https://pokeapi.co/api/v2/pokemon",
             excpecting: AllResponsePokemonModel.self
         ) { result in
             
@@ -27,7 +27,7 @@ final class PKService {
                 }
 
                 asyncEmitter.notify(queue: .global(qos: .utility)) {
-                    nextPage = responseModel.next
+                    PKPager.pokemonNexPage = responseModel.next
                     
                     let responsePokemonModel = PokemonResponseModel(pokemonList: pokemonList, nextPage: responseModel.next)
                     
