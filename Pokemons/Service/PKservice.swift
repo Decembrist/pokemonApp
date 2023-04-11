@@ -3,14 +3,14 @@ import Foundation
 
 final class PKService {
     
-    private static var nextPage: String?
-    
     private init() {}
     
     static func getPokemonList(completion: @escaping (PokemonResponseModel) -> Void) {
+        
         PKNetworkManager.shared.requestByModel(
             PKPager.pokemonNexPage ?? "https://pokeapi.co/api/v2/pokemon",
-            excpecting: AllResponsePokemonModel.self
+            excpecting: AllResponsePokemonModel.self,
+            qos: .userInteractive
         ) { result in
             
             switch result {
@@ -26,7 +26,7 @@ final class PKService {
                     }
                 }
 
-                asyncEmitter.notify(queue: .global(qos: .utility)) {
+                asyncEmitter.notify(queue: .main) {
                     PKPager.pokemonNexPage = responseModel.next
                     
                     let responsePokemonModel = PokemonResponseModel(pokemonList: pokemonList, nextPage: responseModel.next)
@@ -55,7 +55,8 @@ final class PKService {
     }
     
     static func getPokemonTypeList(completion: @escaping ([NameUrlModel]) -> Void) {
-        PKNetworkManager.shared.requestByModel("https://pokeapi.co/api/v2/type/", excpecting: AllResponseTypePokemon.self) { result in
+        
+        PKNetworkManager.shared.requestByModel("https://pokeapi.co/api/v2/type/", excpecting: AllResponseTypePokemon.self, qos: .userInteractive) { result in
             switch result {
             case .success(let success):
                 completion(success.results)

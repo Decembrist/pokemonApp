@@ -10,6 +10,7 @@ final class PKNetworkManager {
     public func requestByModel<T: Decodable>(
         _ endpoint: String,
         excpecting type: T.Type,
+        qos: DispatchQoS.QoSClass = .utility,
         completion: (@escaping (Result<T, Error>) -> Void)
     ) {
         let cacher = ResponseCacher(behavior: .cache)
@@ -17,7 +18,7 @@ final class PKNetworkManager {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         AF.request(endpoint)
             .cacheResponse(using: cacher)
-            .responseDecodable(of: type.self, queue: .global(qos: .utility), decoder: decoder) { response in
+            .responseDecodable(of: type.self, queue: .global(qos: qos), decoder: decoder) { response in
                 
             switch response.result {
             case .success(let responseModel):
