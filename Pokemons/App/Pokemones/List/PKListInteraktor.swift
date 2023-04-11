@@ -53,14 +53,10 @@ final class PKListInteractor: PKListInteractorInputProtocol {
             
             strongSelf.presenter.didRetrivePokemons(responseModel.pokemonList)
             
-            if let _ = responseModel.nextPage {
-                strongSelf.needShowIndicator = true
-                strongSelf.presenter.didRetriveLoadIndicator(true)
-                
-            } else {
-                strongSelf.needShowIndicator = false
-                strongSelf.presenter.didRetriveLoadIndicator(false)
-            }
+            let haveNextPage = responseModel.nextPage != nil
+            
+            strongSelf.needShowIndicator = haveNextPage
+            strongSelf.presenter.didRetriveLoadIndicator(haveNextPage)
             
             strongSelf.isLoadingMoreCharacters = false
         }

@@ -14,13 +14,15 @@ final class PKListView: UIView {
     
     public weak var delegate: PKListViewProtocol?
     
-//    private var pokemonList: [PokemonModel] = [] {
-//        didSet {
-//            collectionView.reloadData()
-//        }
-//    }
+    private var pokemonList: [PokemonModel] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
-    private var pokemonList: [PokemonModel] = []
+    private var pokemonListSafe: [PokemonModel] {
+        pokemonList
+    }
     
     private let cellSize = CGSize(width: 186.5, height: 100)
     
@@ -77,11 +79,8 @@ final class PKListView: UIView {
     }
     
     public func setPokemonList(_ pokemonList: [PokemonModel]) {
-        for pokemon in pokemonList {
-            self.pokemonList.append(pokemon)
-        }
-        collectionView.reloadData()
-//        self.pokemonList = pokemonList
+
+        self.pokemonList += pokemonList
     }
     
     public func setIndicatorValue(_ value: Bool) {
@@ -93,7 +92,7 @@ final class PKListView: UIView {
 extension PKListView: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pokemonList.count
+        return pokemonListSafe.count
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -130,14 +129,14 @@ extension PKListView: UICollectionViewDelegateFlowLayout, UICollectionViewDelega
             fatalError()
         }
         
-        cell.configure(pokemonList[indexPath.row])
+        cell.configure(pokemonListSafe[indexPath.row])
         
         return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let pokemon = pokemonList[indexPath.row]
+        let pokemon = pokemonListSafe[indexPath.row]
         
         delegate?.pushToDetail(with: pokemon)
     }
