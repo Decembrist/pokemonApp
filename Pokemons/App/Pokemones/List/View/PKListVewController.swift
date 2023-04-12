@@ -26,14 +26,13 @@ final class PKListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = PKColorType.background
-        
+        /// viper configurate
         configurator.configure(with: self)
-        
+        /// setup view
         setUpDelegate()
         addSubviews()
         addConstraints()
         setUpNavBar()
-        
         /// fetching data
         retrivePokemonList()
         retriveType()
@@ -49,19 +48,16 @@ final class PKListViewController: UIViewController {
     }
     
     private func addSubviews() {
-        [filterView, titleView, pokemonListView].forEach {
-            view.addSubview($0)
-        }
+        view.addSubviews([
+            titleView,
+            pokemonListView, filterView
+        ])
     }
     
     private func addConstraints() {
         
         NSLayoutConstraint.activate([
-            filterView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            filterView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10),
-            filterView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -10),
-            
-            titleView.topAnchor.constraint(equalTo: filterView.bottomAnchor),
+            titleView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             titleView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             titleView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             
@@ -69,6 +65,10 @@ final class PKListViewController: UIViewController {
             pokemonListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             pokemonListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             pokemonListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            filterView.topAnchor.constraint(equalTo: pokemonListView.bottomAnchor, constant: -40),
+            filterView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            filterView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
         ])
     }
     

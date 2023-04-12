@@ -1,22 +1,22 @@
 import UIKit
 
-
 protocol PKListInteractorInputProtocol: AnyObject {
 
     var presenter: PKListInteractorOutputProtocol { get set }
-    
+    /// PKListView
     func retriveResultIndicaotr()
-    
     func retrivePokemon()
-    
+    /// PKFilterView
     func selectFilter()
     func clearFilter()
     func retriveType()
 }
 
 protocol PKListInteractorOutputProtocol: AnyObject {
+    ///PKListView
     func didRetrivePokemons(_ pokemonList: [PokemonModel])
     func didRetriveLoadIndicator(_ value: Bool)
+    /// PKFilterView
     func didRetriveType(_ typeList: [String])
 }
 

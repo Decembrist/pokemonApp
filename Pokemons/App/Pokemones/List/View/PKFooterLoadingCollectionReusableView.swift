@@ -14,16 +14,15 @@ final class PKFooterLoadingCollectionReusableView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = PKColorType.background
-        
-        setUpView()
+        addSubview(loader)
+        addConstraint()
     }
     
     required init?(coder: NSCoder) {
         fatalError("Unsupport")
     }
     
-    private func setUpView() {
-        addSubview(loader)
+    private func addConstraint() {
         NSLayoutConstraint.activate([
             loader.widthAnchor.constraint(equalToConstant: 100),
             loader.heightAnchor.constraint(equalToConstant: 100),

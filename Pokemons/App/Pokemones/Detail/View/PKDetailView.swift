@@ -57,6 +57,10 @@ class PKDetailView: UIView {
         backgroundColor = model.pokemonColor
         
         setUpView()
+        addConstraint()
+        
+        bottomBackground.transform = CGAffineTransform(translationX: 0, y: 100)
+        bottomBackground.alpha = 0
         
         imagePokemon.af.setImage(withURL: model.pokeonImageUrl, cacheKey: model.pokemonImageUrlString)
         imagePokemon.alpha = 0
@@ -93,13 +97,10 @@ class PKDetailView: UIView {
         statisticView.transform = CGAffineTransform(translationX: 0, y: 60)
         statisticView.alpha = 0
         
-        
         UIView.animate(withDuration: 0.3, delay: 0.3) {
             statisticView.transform = .identity
             statisticView.alpha = 1
         }
-
-        
         NSLayoutConstraint.activate([
             statisticView.topAnchor.constraint(equalTo: typeButton.bottomAnchor, constant: 20),
             statisticView.widthAnchor.constraint(equalToConstant: 340),
@@ -112,27 +113,25 @@ class PKDetailView: UIView {
         fatalError()
     }
     
-    private func setUpView() {
-        addSubview(bottomBackground)
-        addSubview(imagePokemon)
-        addSubview(titleLabel)
-        
-        bottomBackground.transform = CGAffineTransform(translationX: 0, y: 100)
-        bottomBackground.alpha = 0
-        
+    private func addConstraint() {
         NSLayoutConstraint.activate([
             bottomBackground.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 1.4),
             bottomBackground.leftAnchor.constraint(equalTo: leftAnchor),
             bottomBackground.rightAnchor.constraint(equalTo: rightAnchor),
             bottomBackground.bottomAnchor.constraint(equalTo: bottomAnchor),
-
             imagePokemon.bottomAnchor.constraint(equalTo: bottomBackground.topAnchor, constant: 10),
             imagePokemon.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
             titleLabel.topAnchor.constraint(equalTo: bottomBackground.topAnchor, constant: 40),
             titleLabel.leftAnchor.constraint(equalTo: leftAnchor),
             titleLabel.rightAnchor.constraint(equalTo: rightAnchor),
         ])
-        
+    }
+    
+    private func setUpView() {
+        addSubviews([
+            bottomBackground,
+            imagePokemon,
+            titleLabel
+        ])
     }
 }

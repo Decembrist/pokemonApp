@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct AllResponseTypePokemon: Decodable {
+struct AllTypePokemonResponse: Decodable {
     let results: [NameUrlModel]
 }

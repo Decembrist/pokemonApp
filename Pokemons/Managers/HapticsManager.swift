@@ -1,6 +1,5 @@
 import UIKit
 
-
 final class HapticsManager {
     static let shared = HapticsManager()
     

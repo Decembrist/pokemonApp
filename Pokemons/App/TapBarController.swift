@@ -1,10 +1,3 @@
-//
-//  TapBarController.swift
-//  Pokemons
-//
-//  Created by Андрей Павлов on 21.03.2023.
-//
-
 import UIKit
 
 class TapBarController: UITabBarController {
@@ -28,8 +21,6 @@ class TapBarController: UITabBarController {
         
         navStartController.navigationBar.prefersLargeTitles = true
         navSettingsController.navigationBar.prefersLargeTitles = true
-        
-        
         
         setViewControllers([navStartController, navSettingsController], animated: true)
     }

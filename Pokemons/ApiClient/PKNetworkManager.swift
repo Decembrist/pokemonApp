@@ -1,7 +1,6 @@
 import Foundation
 import Alamofire
 
-
 final class PKNetworkManager {
     public static let shared = PKNetworkManager()
     
@@ -25,7 +24,6 @@ final class PKNetworkManager {
                 completion(.success(responseModel))
             case .failure(let error):
                 completion(.failure(error))
-                break
             }
         }
     }

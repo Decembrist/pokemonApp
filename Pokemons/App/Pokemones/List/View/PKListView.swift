@@ -2,11 +2,8 @@ import UIKit
 
 protocol PKListViewProtocol: AnyObject {
     func pushToDetail(with pokemon: PokemonModel)
-    
     func showPokemonList(_ pokemonList: [PokemonModel])
-    
     func retrivePokemonList()
-    
     func setIndicatorLoader(_ value: Bool)
 }
 
@@ -31,15 +28,13 @@ final class PKListView: UIView {
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         layout.minimumInteritemSpacing = 0
-
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = PKColorType.background
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        /// register cell
-        collectionView.register(PKListViewCell.self,
-                                forCellWithReuseIdentifier: PKListViewCell.cellIdentifier)
-        /// register footer loader
+        collectionView.register(
+            PKListViewCell.self,
+            forCellWithReuseIdentifier: PKListViewCell.cellIdentifier)
         collectionView.register(
             PKFooterLoadingCollectionReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
@@ -54,9 +49,7 @@ final class PKListView: UIView {
         backgroundColor = PKColorType.background
         
         setDelegate()
-        
         addSubview(collectionView)
-        
         addConstraint()
     }
     
@@ -79,7 +72,6 @@ final class PKListView: UIView {
     }
     
     public func setPokemonList(_ pokemonList: [PokemonModel]) {
-
         self.pokemonList += pokemonList
     }
     
@@ -95,24 +87,31 @@ extension PKListView: UICollectionViewDelegateFlowLayout, UICollectionViewDelega
         return pokemonListSafe.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
         
         guard let footer = collectionView.dequeueReusableSupplementaryView(
-                ofKind: UICollectionView.elementKindSectionFooter,
-                withReuseIdentifier: PKFooterLoadingCollectionReusableView.identifire,
-                for: indexPath
-              ) as? PKFooterLoadingCollectionReusableView else {
-            fatalError("Unsupported")
+            ofKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: PKFooterLoadingCollectionReusableView.identifire,
+            for: indexPath
+        ) as? PKFooterLoadingCollectionReusableView else {
+            return UICollectionReusableView()
         }
         
         footer.startAnimation()
-        
         delegate?.retrivePokemonList()
         
         return footer
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
         
         guard showIndicatorLoader else {
             return .zero
@@ -141,9 +140,10 @@ extension PKListView: UICollectionViewDelegateFlowLayout, UICollectionViewDelega
         delegate?.pushToDetail(with: pokemon)
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         
         let width = (bounds.width / 2) - 10

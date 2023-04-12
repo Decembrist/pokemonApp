@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AllResponsePokemonModel: Codable {
+struct AllPokemonsResponse: Decodable {
     let count: Int
     let next: String?
     let previus: String?

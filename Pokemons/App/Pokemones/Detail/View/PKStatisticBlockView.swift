@@ -1,13 +1,29 @@
 import UIKit
 
 final class PKStatisticBlockView: UIView {
+    
+    private let minimumStatValue = 30
 
+    private lazy var stackViewX: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .leading
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 0
+        
+        return stackView
+    }()
+    
+    private lazy var stackName = createStackElement()
+    private lazy var stackValue = createStackElement()
+    private lazy var stackRange = createStackElement()
+    
     init(frame: CGRect, model: PokemonModel) {
         super.init(frame: frame)
-        
+        addSubview(stackViewX)
         setUpLayer()
-        
         setUpViews(model)
+        addConstraint()
     }
     
     required init?(coder: NSCoder) {
@@ -26,7 +42,7 @@ final class PKStatisticBlockView: UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         
-        let progressColor: UIColor = val <= 30 ? .systemRed : .systemGreen
+        let progressColor: UIColor = val <= self.minimumStatValue ? .red : .green
         
         let rangeView = UIProgressView()
         rangeView.progress = Float(val) / 100
@@ -36,7 +52,7 @@ final class PKStatisticBlockView: UIView {
         container.addSubview(rangeView)
         
         NSLayoutConstraint.activate([
-            container.heightAnchor.constraint(equalToConstant: 20.3333),
+            container.heightAnchor.constraint(equalToConstant: 20),
             container.widthAnchor.constraint(equalToConstant: 100),
             
             rangeView.centerYAnchor.constraint(equalTo: container.centerYAnchor),
@@ -58,46 +74,35 @@ final class PKStatisticBlockView: UIView {
     }
     
     private func setUpViews(_ model: PokemonModel) {
-        let stackViewX = UIStackView()
-        stackViewX.translatesAutoresizingMaskIntoConstraints = false
-        stackViewX.alignment = .leading
-        stackViewX.distribution = .fillProportionally
-        stackViewX.spacing = 0
-        addSubview(stackViewX)
-        
-        let stackName = createStackElement()
-        let stackValue = createStackElement()
-        let stackRange = createStackElement()
+
         stackRange.alignment = .center
 
         stackViewX.addArrangedSubview(stackName)
         stackViewX.addArrangedSubview(stackValue)
         stackViewX.addArrangedSubview(stackRange)
         
-        let stats = model.stats
-        
-        stats.forEach { stat in
+        model.stats.forEach { stat in
             let nameLabel = UILabel()
             nameLabel.textColor = .black
             nameLabel.text = stat.stat.name
             
             stackName.addArrangedSubview(nameLabel)
         }
-        
-        stats.forEach { stat in
+        model.stats.forEach { stat in
             let valueLabel = UILabel()
             valueLabel.textColor = .black
             valueLabel.text = "\(stat.baseStat)"
             
             stackValue.addArrangedSubview(valueLabel)
         }
-        
-        stats.forEach { stat in
+        model.stats.forEach { stat in
             let progressView = createProgressElement(val: stat.baseStat)
             
             stackRange.addArrangedSubview(progressView)
         }
-        
+    }
+    
+    private func addConstraint() {
         NSLayoutConstraint.activate([
             stackViewX.topAnchor.constraint(equalTo: topAnchor, constant: 50),
             stackViewX.leftAnchor.constraint(equalTo: leftAnchor, constant: 20),

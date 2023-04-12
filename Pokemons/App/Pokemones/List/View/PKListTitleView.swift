@@ -15,16 +15,15 @@ final class PKListTitleView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        
-        setUpView()
+        addSubview(titleLable)
+        addConstraint()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
-    private func setUpView() {
-        addSubview(titleLable)
+    private func addConstraint() {
         NSLayoutConstraint.activate([
             titleLable.topAnchor.constraint(equalTo: topAnchor, constant: 30),
             titleLable.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
