@@ -1,6 +1,6 @@
 import UIKit
 
-class PKDetailView: UIView {
+final class PKDetailView: UIView {
     
     private var statisticView: PKStatisticBlockView?
     
