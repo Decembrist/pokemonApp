@@ -1,0 +1,83 @@
+import UIKit
+
+protocol PKListInteractorInputProtocol: AnyObject {
+
+    var presenter: PKListInteractorOutputProtocol { get set }
+    /// PKListView
+    func retriveResultIndicaotr()
+    func retrivePokemon()
+    /// PKFilterView
+    func selectFilter()
+    func clearFilter()
+    func retriveType()
+}
+
+protocol PKListInteractorOutputProtocol: AnyObject {
+    ///PKListView
+    func didRetrivePokemons(_ pokemonList: [PokemonModel])
+    func didRetriveLoadIndicator(_ value: Bool)
+    /// PKFilterView
+    func didRetriveType(_ typeList: [String])
+}
+
+final class PKListInteractor: PKListInteractorInputProtocol {
+    
+    unowned var presenter: PKListInteractorOutputProtocol
+    
+    private var isLoadingMoreCharacters: Bool = false
+
+    private var needShowIndicator: Bool = false
+    
+    private let asyncEmitter = DispatchGroup()
+    
+    init(presenter: PKListInteractorOutputProtocol) {
+        self.presenter = presenter
+    }
+
+    func retriveResultIndicaotr() {
+        presenter.didRetriveLoadIndicator(needShowIndicator)
+    }
+
+    func retrivePokemon() {
+        
+        guard !isLoadingMoreCharacters else {
+            return
+        }
+
+        isLoadingMoreCharacters = true
+
+        PKService.getPokemonList { [weak self] responseModel in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.presenter.didRetrivePokemons(responseModel.pokemonList)
+            
+            let haveNextPage = responseModel.nextPage != nil
+            
+            strongSelf.needShowIndicator = haveNextPage
+            strongSelf.presenter.didRetriveLoadIndicator(haveNextPage)
+            
+            strongSelf.isLoadingMoreCharacters = false
+        }
+        
+
+    }
+    
+    func retriveType() {
+        PKService.getPokemonTypeList { [weak self] typeList in
+            DispatchQueue.main.async {
+                self?.presenter.didRetriveType(typeList.compactMap{ $0.nameCapitalized })
+            }   
+        }
+    }
+    
+    func selectFilter() {
+        print("action filter select")
+    }
+    
+    func clearFilter() {
+        print("action filter clear")
+    }
+    
+}

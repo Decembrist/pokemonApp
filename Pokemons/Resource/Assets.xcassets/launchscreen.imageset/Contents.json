@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "pikaphone.jpg",
+      "idiom" : "iphone"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
