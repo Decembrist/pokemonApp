@@ -10,5 +10,5 @@ import Foundation
 final class PKPager {
     private init() {}
     
-    public static var pokemonNexPage: String?
+    public static var pokemonNextPage: String?
 }

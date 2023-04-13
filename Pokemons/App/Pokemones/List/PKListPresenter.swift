@@ -11,7 +11,7 @@ protocol PKListPresenterProtocol: AnyObject {
     func retrivePokemons()
     
     // MARK: ViewListFilter
-    func selectFilter()
+    func selectFilter(_ typeId: Int)
     func clearFilter()
     func retriveType()
 }
@@ -21,6 +21,10 @@ final class PKListPresenter: PKListPresenterProtocol {
     unowned var viewController: PKListViewPotocolCombine
     var interactor: PKListInteractorInputProtocol?
     var router: PKListRouterProtocol?
+    
+    private var isLoadingMoreCharacters: Bool = false
+    private let asyncEmitter = DispatchGroup()
+    private var storePokemonList: [PokemonModel] = []
 
     init(view: PKListViewPotocolCombine) {
         viewController = view
@@ -29,16 +33,23 @@ final class PKListPresenter: PKListPresenterProtocol {
     func showPokemonDetail(_ pokemon: PokemonModel) {
         
         HapticsManager.shared.selectionVibrate()
-        
         router?.showPokemonDetail(for: pokemon)
     }
     
     func retrivePokemons() {
+        guard !isLoadingMoreCharacters else {
+            return
+        }
+        isLoadingMoreCharacters = true
         interactor?.retrivePokemon()
     }
     
-    func selectFilter() {
-        interactor?.selectFilter()
+    func selectFilter(_ typeId: Int) {
+        guard !isLoadingMoreCharacters else {
+            return
+        }
+        isLoadingMoreCharacters = true
+        interactor?.selectFilter(typeId)
     }
     
     func clearFilter() {
@@ -52,18 +63,23 @@ final class PKListPresenter: PKListPresenterProtocol {
 }
 
 extension PKListPresenter: PKListInteractorOutputProtocol {
-    func didRetrivePokemons(_ pokemonList: [PokemonModel]) {
+    func didRetrivePokemons(_ response: PokemonResponseModel, reinit: Bool) {
         
-        let pokemonListSorted = pokemonList.sorted { $0.id < $1.id }
+        viewController.setIndicatorLoader(response.nextPage != nil)
+        PKPager.pokemonNextPage = response.nextPage
         
-        viewController.showPokemonList(pokemonListSorted)
+        if reinit {
+            storePokemonList.removeAll()
+            viewController.scrollToTop(false)
+        }
+        
+        viewController.setIndicatorLoader(response.nextPage != nil)
+        storePokemonList += response.pokemonList.sorted { $0.id < $1.id }
+        viewController.showPokemonList(storePokemonList)
+        isLoadingMoreCharacters = false
     }
     
-    func didRetriveLoadIndicator(_ value: Bool) {
-        viewController.setIndicatorLoader(value)
-    }
-    
-    func didRetriveType(_ typeList: [String]) {
+    func didRetriveType(_ typeList: [NameUrlModel]) {
         viewController.showType(typeList)
     }
 }

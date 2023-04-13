@@ -1,20 +1,25 @@
 import UIKit
 
 protocol PKListFilterViewProtocol: AnyObject {
-    func selectFilter()
+    func selectFilter(_ typeId: Int)
     func clearFilter()
     func retriveType()
-    func showType(_ typeList: [String])
+    func showType(_ typeList: [NameUrlModel])
 }
 
 final class PKListFilterView: UIView {
     
     public weak var delegate: PKListFilterViewProtocol?
     
-    private var typeList: [String] = [] {
+    private var typeList: [NameUrlModel] = [] {
         didSet {
-            for (index, name) in typeList.enumerated() {
-                let button = self.createScrollElem(title: name, tag: index)
+            for typeItem in typeList {
+                
+                let urlSubstring = typeItem.url.split(whereSeparator: { $0 == "/"})
+                
+                guard let last = urlSubstring.last, let typeId = Int(last) else { return }
+
+                let button = self.createScrollElem(title: typeItem.nameCapitalized, tag: typeId)
                 self.stackScrollElementList.addArrangedSubview(button)
             }
         }
@@ -92,21 +97,17 @@ final class PKListFilterView: UIView {
             filterContainer.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
             filterContainer.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
             filterContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            
             filterClearButton.topAnchor.constraint(equalTo: filterContainer.topAnchor),
             filterClearButton.leftAnchor.constraint(equalTo: filterContainer.leftAnchor),
             filterClearButton.bottomAnchor.constraint(equalTo: filterContainer.bottomAnchor),
-
             filterViewScrollContainer.topAnchor.constraint(equalTo: filterContainer.topAnchor),
             filterViewScrollContainer.leftAnchor.constraint(equalTo: filterClearButton.rightAnchor, constant: 10),
             filterViewScrollContainer.rightAnchor.constraint(equalTo: filterContainer.rightAnchor),
             filterViewScrollContainer.bottomAnchor.constraint(equalTo: filterContainer.bottomAnchor),
-
             filterScrollView.topAnchor.constraint(equalTo: filterViewScrollContainer.topAnchor),
             filterScrollView.leftAnchor.constraint(equalTo: filterViewScrollContainer.leftAnchor),
             filterScrollView.rightAnchor.constraint(equalTo: filterViewScrollContainer.rightAnchor),
             filterScrollView.bottomAnchor.constraint(equalTo: filterViewScrollContainer.bottomAnchor),
-
             stackScrollElementList.topAnchor.constraint(equalTo: filterScrollView.topAnchor),
             stackScrollElementList.leftAnchor.constraint(equalTo: filterScrollView.leftAnchor),
             stackScrollElementList.rightAnchor.constraint(equalTo: filterScrollView.rightAnchor),
@@ -131,7 +132,7 @@ final class PKListFilterView: UIView {
     
     @objc
     private func selectFilter(_ sender: UIButton) {
-        delegate?.selectFilter()
+        delegate?.selectFilter(sender.tag)
     }
 
     @objc
@@ -139,7 +140,7 @@ final class PKListFilterView: UIView {
         delegate?.clearFilter()
     }
     
-    func setTypeList(_ typeList: [String]) {
+    func setTypeList(_ typeList: [NameUrlModel]) {
         self.typeList = typeList
     }
 }

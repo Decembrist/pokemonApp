@@ -67,7 +67,14 @@ final class PKListViewCell: UICollectionViewCell {
     
     public func configure(_ model: PokemonModel) {
         nameLabel.text = model.name
-        imageView.af.setImage(withURL: model.pokeonImageUrl, cacheKey: model.pokemonImageUrlString)
+        
+        guard
+            let imageString = model.pokemonImageUrlString,
+            let urlImage = URL(string: imageString) else {
+            return
+        }
+        
+        imageView.af.setImage(withURL: urlImage, cacheKey: imageString)
         backGroundView.backgroundColor = model.pokemonColor
         model.types.forEach {
             stackView.addArrangedSubview(createLableType(title: $0.type.nameCapitalized))

@@ -93,12 +93,16 @@ extension PKListViewController: PKListViewProtocol {
     func setIndicatorLoader(_ value: Bool) {
         pokemonListView.setIndicatorValue(value)
     }
+    
+    func scrollToTop(_ animated: Bool) {
+        pokemonListView.scrollToTop(animated)
+    }
 }
 
 extension PKListViewController: PKListFilterViewProtocol {
     
-    func selectFilter() {
-        presenter.selectFilter()
+    func selectFilter(_ typeId: Int) {
+        presenter.selectFilter(typeId)
     }
     
     func clearFilter() {
@@ -109,7 +113,7 @@ extension PKListViewController: PKListFilterViewProtocol {
         presenter.retriveType()
     }
     
-    func showType(_ typeList: [String]) {
+    func showType(_ typeList: [NameUrlModel]) {
         filterView.setTypeList(typeList)
     }
     
