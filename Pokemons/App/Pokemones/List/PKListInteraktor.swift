@@ -42,7 +42,6 @@ final class PKListInteractor: PKListInteractorInputProtocol {
     
     func selectFilter(_ typeId: Int) {
         PKService.getAllPokemonListByTypeId(typeId) { [weak self] pokemonList in
-            print(pokemonList.count)
             let model = PokemonResponseModel(pokemonList: pokemonList, nextPage: nil)
             self?.presenter.didRetrivePokemons(model, reinit: true)
             

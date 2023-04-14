@@ -1,6 +1,6 @@
 import UIKit
 
-typealias PKListViewPotocolCombine = PKListViewProtocol & PKListFilterViewProtocol
+typealias PKListViewPotocolCombine = PKListViewProtocol & PKListFilterViewProtocol & PKLoaderViewProtocol
 
 final class PKListViewController: UIViewController {
     
@@ -12,6 +12,7 @@ final class PKListViewController: UIViewController {
     private let pokemonListView = PKListView()
     private let titleView = PKListTitleView()
     private let filterView = PKListFilterView()
+    private let loaderView = PKLoaderView()
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -50,7 +51,9 @@ final class PKListViewController: UIViewController {
     private func addSubviews() {
         view.addSubviews([
             titleView,
-            pokemonListView, filterView
+            pokemonListView,
+            filterView,
+            loaderView
         ])
     }
     
@@ -69,6 +72,11 @@ final class PKListViewController: UIViewController {
             filterView.topAnchor.constraint(equalTo: pokemonListView.bottomAnchor, constant: -40),
             filterView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             filterView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            
+            loaderView.topAnchor.constraint(equalTo: view.topAnchor),
+            loaderView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            loaderView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            loaderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
@@ -76,6 +84,7 @@ final class PKListViewController: UIViewController {
 }
 
 // MARK: VIPER
+/// ListView
 extension PKListViewController: PKListViewProtocol {
     
     func retrivePokemonList() {
@@ -98,7 +107,7 @@ extension PKListViewController: PKListViewProtocol {
         pokemonListView.scrollToTop(animated)
     }
 }
-
+/// FilterView
 extension PKListViewController: PKListFilterViewProtocol {
     
     func selectFilter(_ typeId: Int) {
@@ -116,5 +125,14 @@ extension PKListViewController: PKListFilterViewProtocol {
     func showType(_ typeList: [NameUrlModel]) {
         filterView.setTypeList(typeList)
     }
+}
+/// LoaderView
+extension PKListViewController: PKLoaderViewProtocol {
+    func start() {
+        loaderView.start()
+    }
     
+    func stop() {
+        loaderView.stop()
+    }
 }
