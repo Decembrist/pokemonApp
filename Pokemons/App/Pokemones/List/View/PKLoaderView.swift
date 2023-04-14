@@ -18,6 +18,7 @@ final class PKLoaderView: UIView {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true
+        spinner.color = .red
         
         return spinner
     }()
@@ -32,14 +33,10 @@ final class PKLoaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpLayer()
-        
         addSubviews([blurBackground, loader])
-        
         let blurEffect = UIBlurEffect(style: .light)
         blurBackground.effect = blurEffect
-        
         addConstraint()
-        
     }
     
     required init?(coder: NSCoder) {

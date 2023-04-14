@@ -1,13 +1,11 @@
 import UIKit
 
-typealias PKListViewPotocolCombine = PKListViewProtocol & PKListFilterViewProtocol & PKLoaderViewProtocol
+typealias PKListViewPotocolCombine = UIViewController & PKListViewProtocol & PKListFilterViewProtocol & PKLoaderViewProtocol
 
 final class PKListViewController: UIViewController {
-    
     ///viper
     var presenter: PKListPresenter!
     let configurator = PKListConfigurator()
-    
     /// views
     private let pokemonListView = PKListView()
     private let titleView = PKListTitleView()
@@ -58,7 +56,6 @@ final class PKListViewController: UIViewController {
     }
     
     private func addConstraints() {
-        
         NSLayoutConstraint.activate([
             titleView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             titleView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
@@ -67,9 +64,9 @@ final class PKListViewController: UIViewController {
             pokemonListView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
             pokemonListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             pokemonListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            pokemonListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            pokemonListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
             
-            filterView.topAnchor.constraint(equalTo: pokemonListView.bottomAnchor, constant: -40),
+            filterView.topAnchor.constraint(equalTo: pokemonListView.bottomAnchor),
             filterView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             filterView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             
@@ -78,9 +75,7 @@ final class PKListViewController: UIViewController {
             loaderView.rightAnchor.constraint(equalTo: view.rightAnchor),
             loaderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-    }
-    
-       
+    }  
 }
 
 // MARK: VIPER

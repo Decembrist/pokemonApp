@@ -28,6 +28,7 @@ final class PKListPresenter: PKListPresenterProtocol {
     private let asyncEmitter = DispatchGroup()
     private var storePokemonList: [PokemonModel] = []
     private var enableClearFilter = false
+    private var selectedFilter: Int = 0
 
     init(view: PKListViewPotocolCombine) {
         viewController = view
@@ -55,9 +56,12 @@ extension PKListPresenter {
 /// FilterView
 extension PKListPresenter {
     func selectFilter(_ typeId: Int) {
-        if isLoadingMoreCharacters {
+        HapticsManager.shared.selectionVibrate()
+        if isLoadingMoreCharacters || selectedFilter == typeId {
             return
         }
+        
+        selectedFilter = typeId
         enableClearFilter = true
         startLoader()
         isLoadingMoreCharacters = true
@@ -65,8 +69,10 @@ extension PKListPresenter {
     }
     
     func clearFilter() {
+        HapticsManager.shared.selectionVibrate()
         guard enableClearFilter else { return }
         enableClearFilter = false
+        selectedFilter = 0
         startLoader()
         interactor?.clearFilter()
     }
@@ -75,9 +81,11 @@ extension PKListPresenter {
 extension PKListPresenter {
     func startLoader() {
         viewController.start()
+        viewController.tabBarController?.tabBar.isHidden = true
     }
     func stopLoader() {
         viewController.stop()
+        viewController.tabBarController?.tabBar.isHidden = false
     }
 }
 
@@ -90,7 +98,8 @@ extension PKListPresenter: PKListInteractorOutputProtocol {
             viewController.scrollToTop(false)
         }
         viewController.setIndicatorLoader(response.nextPage != nil)
-        storePokemonList += response.pokemonList.sorted { $0.id < $1.id }
+        let havePhotoPokemonList = response.pokemonList.filter { $0.pokemonImageUrlString != nil }
+        storePokemonList += havePhotoPokemonList.sorted { $0.id < $1.id }
         viewController.showPokemonList(storePokemonList)
         isLoadingMoreCharacters = false
         stopLoader()

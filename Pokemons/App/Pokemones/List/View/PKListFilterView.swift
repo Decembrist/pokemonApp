@@ -25,19 +25,9 @@ final class PKListFilterView: UIView {
         }
     }
     
-    private lazy var filterContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
+    private lazy var filterContainer = ViewHelper.createEmptyView()
     
-    private lazy var filterViewScrollContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
+    private lazy var filterViewScrollContainer = ViewHelper.createEmptyView()
     
     private lazy var filterClearButton: UIButton = {
         
@@ -50,6 +40,14 @@ final class PKListFilterView: UIView {
         button.addTarget(self, action: #selector(clearFilter), for: .touchUpInside)
         
         return button
+    }()
+    
+    private lazy var clearButtonContainer: UIView = {
+        let view = ViewHelper.createEmptyView()
+        
+        
+        
+        return view
     }()
     
     private lazy var filterScrollView: UIScrollView = {
@@ -77,16 +75,33 @@ final class PKListFilterView: UIView {
         
         setUpViews()
         addConstraint()
+        addGradientClearButtonContainer()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
+    private func addGradientClearButtonContainer() {
+        clearButtonContainer.layoutIfNeeded()
+        let colorTop =  UIColor(red: 1, green: 1, blue: 1, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1).cgColor
+                    
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+        gradientLayer.frame = clearButtonContainer.bounds
+        
+        clearButtonContainer.layer.insertSublayer(gradientLayer, at:0)
+    }
+    
     private func setUpViews() {
         addSubview(filterContainer)
-        filterContainer.addSubview(filterClearButton)
+        clearButtonContainer.addSubview(filterClearButton)
         filterContainer.addSubview(filterViewScrollContainer)
+        filterContainer.addSubview(clearButtonContainer)
+        
         filterViewScrollContainer.addSubview(filterScrollView)
         filterScrollView.addSubview(stackScrollElementList)
     }
@@ -97,11 +112,18 @@ final class PKListFilterView: UIView {
             filterContainer.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
             filterContainer.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
             filterContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            filterClearButton.topAnchor.constraint(equalTo: filterContainer.topAnchor),
-            filterClearButton.leftAnchor.constraint(equalTo: filterContainer.leftAnchor),
-            filterClearButton.bottomAnchor.constraint(equalTo: filterContainer.bottomAnchor),
+            
+            clearButtonContainer.topAnchor.constraint(equalTo: filterContainer.topAnchor),
+            clearButtonContainer.leftAnchor.constraint(equalTo: filterContainer.leftAnchor),
+            clearButtonContainer.widthAnchor.constraint(equalToConstant: 74),
+            clearButtonContainer.bottomAnchor.constraint(equalTo: filterContainer.bottomAnchor),
+            
+            filterClearButton.topAnchor.constraint(equalTo: clearButtonContainer.topAnchor),
+            filterClearButton.leftAnchor.constraint(equalTo: clearButtonContainer.leftAnchor),
+            filterClearButton.bottomAnchor.constraint(equalTo: clearButtonContainer.bottomAnchor),
+            
             filterViewScrollContainer.topAnchor.constraint(equalTo: filterContainer.topAnchor),
-            filterViewScrollContainer.leftAnchor.constraint(equalTo: filterClearButton.rightAnchor, constant: 10),
+            filterViewScrollContainer.leftAnchor.constraint(equalTo: clearButtonContainer.rightAnchor),
             filterViewScrollContainer.rightAnchor.constraint(equalTo: filterContainer.rightAnchor),
             filterViewScrollContainer.bottomAnchor.constraint(equalTo: filterContainer.bottomAnchor),
             filterScrollView.topAnchor.constraint(equalTo: filterViewScrollContainer.topAnchor),

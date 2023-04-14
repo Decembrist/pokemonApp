@@ -19,6 +19,7 @@
 		5556D91329E7EFDB00E208BA /* AllListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5556D91229E7EFDB00E208BA /* AllListResponse.swift */; };
 		5556D91529E7FFC200E208BA /* TypePokemonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5556D91429E7FFC200E208BA /* TypePokemonResponse.swift */; };
 		5556D91729E93C9E00E208BA /* PKLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5556D91629E93C9E00E208BA /* PKLoaderView.swift */; };
+		5556D91A29E94DC800E208BA /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5556D91929E94DC800E208BA /* ViewHelper.swift */; };
 		558BA8D529C9B53800C57E83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8D429C9B53800C57E83 /* AppDelegate.swift */; };
 		558BA8D729C9B53800C57E83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8D629C9B53800C57E83 /* SceneDelegate.swift */; };
 		558BA8D929C9B53800C57E83 /* PKListVewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA8D829C9B53800C57E83 /* PKListVewController.swift */; };
@@ -62,6 +63,7 @@
 		5556D91229E7EFDB00E208BA /* AllListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListResponse.swift; sourceTree = "<group>"; };
 		5556D91429E7FFC200E208BA /* TypePokemonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypePokemonResponse.swift; sourceTree = "<group>"; };
 		5556D91629E93C9E00E208BA /* PKLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKLoaderView.swift; sourceTree = "<group>"; };
+		5556D91929E94DC800E208BA /* ViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
 		558BA8D129C9B53800C57E83 /* Pokemons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokemons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		558BA8D429C9B53800C57E83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		558BA8D629C9B53800C57E83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 			path = Configurations;
 			sourceTree = "<group>";
 		};
+		5556D91829E94DA200E208BA /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5556D91929E94DC800E208BA /* ViewHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		558BA8C829C9B53800C57E83 = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +168,7 @@
 		558BA8D329C9B53800C57E83 /* Pokemons */ = {
 			isa = PBXGroup;
 			children = (
+				5556D91829E94DA200E208BA /* Helpers */,
 				5556D90D29E5859E00E208BA /* Configurations */,
 				5556D90C29E5852500E208BA /* Extensions */,
 				5556D90329E42DEB00E208BA /* Service */,
@@ -401,6 +412,7 @@
 				558BA8EB29C9B85900C57E83 /* TapBarController.swift in Sources */,
 				558BA90B29CDDAFE00C57E83 /* Label.swift in Sources */,
 				55D32D0C29DDD74B006D9C51 /* PKDetailInteractor.swift in Sources */,
+				5556D91A29E94DC800E208BA /* ViewHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

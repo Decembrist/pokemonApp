@@ -1,8 +1,6 @@
 import Foundation
 
-final class PKService {
-    
-    private init() {}
+struct PKService {
     
     static func getPokemonList(completion: @escaping (PokemonResponseModel) -> Void) {
         
