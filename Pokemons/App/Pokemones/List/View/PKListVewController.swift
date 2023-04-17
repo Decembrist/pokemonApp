@@ -1,6 +1,6 @@
 import UIKit
 
-typealias PKListViewPotocolCombine = UIViewController & PKListViewProtocol & PKListFilterViewProtocol & PKLoaderViewProtocol
+typealias PKListViewPotocolCombine = PKListViewProtocol & PKListFilterViewProtocol & PKLoaderViewProtocol
 
 final class PKListViewController: UIViewController {
     ///viper
@@ -129,5 +129,9 @@ extension PKListViewController: PKLoaderViewProtocol {
     
     func stop() {
         loaderView.stop()
+    }
+    
+    func toggleShowTabBar(hide: Bool) {
+        tabBarController?.tabBar.isHidden = hide
     }
 }

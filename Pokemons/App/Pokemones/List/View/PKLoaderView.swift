@@ -10,6 +10,7 @@ import UIKit
 protocol PKLoaderViewProtocol {
     func start()
     func stop()
+    func toggleShowTabBar(hide: Bool)
 }
 
 final class PKLoaderView: UIView {

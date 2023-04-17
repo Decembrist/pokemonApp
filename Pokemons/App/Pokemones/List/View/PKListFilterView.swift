@@ -42,13 +42,7 @@ final class PKListFilterView: UIView {
         return button
     }()
     
-    private lazy var clearButtonContainer: UIView = {
-        let view = ViewHelper.createEmptyView()
-        
-        
-        
-        return view
-    }()
+    private lazy var clearButtonContainer = ViewHelper.createEmptyView()
     
     private lazy var filterScrollView: UIScrollView = {
         let scroll = UIScrollView()

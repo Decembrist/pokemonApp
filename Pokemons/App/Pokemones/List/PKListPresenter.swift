@@ -80,12 +80,12 @@ extension PKListPresenter {
 /// LoaderView
 extension PKListPresenter {
     func startLoader() {
+        viewController.toggleShowTabBar(hide: true)
         viewController.start()
-        viewController.tabBarController?.tabBar.isHidden = true
     }
     func stopLoader() {
+        viewController.toggleShowTabBar(hide: false)
         viewController.stop()
-        viewController.tabBarController?.tabBar.isHidden = false
     }
 }
 

@@ -7,6 +7,7 @@ final class PKFooterLoadingCollectionReusableView: UICollectionReusableView {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true
+        spinner.color = .red
         
         return spinner
     }()
