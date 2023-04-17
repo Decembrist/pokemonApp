@@ -91,7 +91,6 @@ extension PKListPresenter {
 
 extension PKListPresenter: PKListInteractorOutputProtocol {
     func didRetrivePokemons(_ response: PokemonResponseModel, reinit: Bool) {
-        viewController.setIndicatorLoader(response.nextPage != nil)
         PKPager.pokemonNextPage = response.nextPage
         if reinit {
             storePokemonList.removeAll()
