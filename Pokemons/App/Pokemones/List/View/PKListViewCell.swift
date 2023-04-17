@@ -99,6 +99,7 @@ final class PKListViewCell: UICollectionViewCell {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             nameLabel.heightAnchor.constraint(equalToConstant: 30),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
             nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
             nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             backGroundView.topAnchor.constraint(equalTo: contentView.topAnchor),

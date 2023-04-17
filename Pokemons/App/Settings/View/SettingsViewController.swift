@@ -13,6 +13,15 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         title = "Settings"
         view.backgroundColor = PKColorType.background
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        
+
+        
+
+//        print( WOW.complite(.one))
+        NSLayoutConstraint.activate([
+            
+        ])
     }
     
 
