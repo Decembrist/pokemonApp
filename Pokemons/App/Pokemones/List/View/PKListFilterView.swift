@@ -25,9 +25,9 @@ final class PKListFilterView: UIView {
         }
     }
     
-    private lazy var filterContainer = ViewHelper.createEmptyView()
+    private lazy var filterContainer = UIView.createAuthorisizeView()
     
-    private lazy var filterViewScrollContainer = ViewHelper.createEmptyView()
+    private lazy var filterViewScrollContainer = UIView.createAuthorisizeView()
     
     private lazy var filterClearButton: UIButton = {
         
@@ -42,7 +42,7 @@ final class PKListFilterView: UIView {
         return button
     }()
     
-    private lazy var clearButtonContainer = ViewHelper.createEmptyView()
+    private lazy var clearButtonContainer = UIView.createAuthorisizeView()
     
     private lazy var filterScrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -65,7 +65,7 @@ final class PKListFilterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = PKColorType.background
+        backgroundColor = PKColorTypeEnum.background.uiColor
         
         setUpViews()
         addConstraint()

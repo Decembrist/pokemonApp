@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol PKLoaderViewProtocol {
+protocol PKLoaderViewProtocol: AnyObject {
     func start()
     func stop()
     func toggleShowTabBar(hide: Bool)
@@ -46,7 +46,7 @@ final class PKLoaderView: UIView {
     
     private func setUpLayer() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = PKColorType.background.withAlphaComponent(0.1)
+        backgroundColor = PKColorTypeEnum.background.uiColor.withAlphaComponent(0.1)
         isHidden = true
         alpha = 0
     }

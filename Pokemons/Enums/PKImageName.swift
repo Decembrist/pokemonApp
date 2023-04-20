@@ -3,25 +3,15 @@ import Foundation
 enum PKImageName {
     
     enum Pokemon: String {
-        case mainIcon
-        case buttonType
-        
-        var name: String {
-            switch self {
-            case .buttonType: return "flame.fill"
-            case .mainIcon: return "person"
-            }
-        }
+        case mainIcon = "flame.fill"
+        case buttonType = "person"
+    }
+    
+    enum Search: String {
+        case mainIcon = "magnifyingglass"
     }
 
     enum Settings: String {
-        case mainIcon
-        
-        var name: String {
-            switch self {
-            case .mainIcon: return "gear"
-            }
-        }
-
+        case mainIcon = "gear"
     }
 }

@@ -31,7 +31,7 @@ final class PKListView: UIView {
         layout.minimumInteritemSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = PKColorType.background
+        collectionView.backgroundColor = PKColorTypeEnum.background.uiColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(
             PKListViewCell.self,
@@ -47,7 +47,7 @@ final class PKListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = PKColorType.background
+        backgroundColor = PKColorTypeEnum.background.uiColor
         
         setDelegate()
         addSubview(collectionView)

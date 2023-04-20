@@ -11,4 +11,11 @@ public extension UIView {
     func addSubviews(_ subviews: [UIView]) {
         subviews.forEach { self.addSubview($0) }
     }
+    
+    static func createAuthorisizeView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }
 }

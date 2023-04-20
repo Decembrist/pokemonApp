@@ -14,7 +14,7 @@ final class PKFooterLoadingCollectionReusableView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = PKColorType.background
+        backgroundColor = PKColorTypeEnum.background.uiColor
         addSubview(loader)
         addConstraint()
     }

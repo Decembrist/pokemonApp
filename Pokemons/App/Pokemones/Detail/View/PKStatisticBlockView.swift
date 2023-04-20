@@ -66,7 +66,7 @@ final class PKStatisticBlockView: UIView {
     
     private func setUpLayer() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = PKColorType.background
+        backgroundColor = PKColorTypeEnum.background.uiColor
         layer.cornerRadius = 50
         layer.shadowOpacity = 0.2
         layer.shadowColor = UIColor.black.cgColor

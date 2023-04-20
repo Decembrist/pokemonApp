@@ -3,7 +3,7 @@ import UIKit
 typealias PKListViewPotocolCombine = PKListViewProtocol & PKListFilterViewProtocol & PKLoaderViewProtocol
 
 final class PKListViewController: UIViewController {
-    ///viper
+    /// viper
     var presenter: PKListPresenter!
     let configurator = PKListConfigurator()
     /// views
@@ -24,7 +24,7 @@ final class PKListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = PKColorType.background
+        view.backgroundColor = PKColorTypeEnum.background.uiColor
         /// viper configurate
         configurator.configure(with: self)
         /// setup view

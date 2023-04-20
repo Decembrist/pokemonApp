@@ -9,21 +9,25 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    private let settingsView = SettingsView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Settings"
-        view.backgroundColor = PKColorType.background
+        view.backgroundColor = PKColorTypeEnum.background.uiColor
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        
 
-        
-
-//        print( WOW.complite(.one))
-        NSLayoutConstraint.activate([
-            
-        ])
+        view.addSubview(settingsView)
+        addConstraint()
     }
     
-
+    private func addConstraint() {
+        NSLayoutConstraint.activate([
+            settingsView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            settingsView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 70),
+            settingsView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -70),
+//            settingsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
 
 }
