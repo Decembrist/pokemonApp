@@ -67,7 +67,15 @@ final class PKListViewCell: UICollectionViewCell {
     
     public func configure(_ model: PokemonModel) {
         nameLabel.text = model.name
-        imageView.af.setImage(withURL: model.pokeonImageUrl, cacheKey: model.pokemonImageUrlString)
+        
+        if
+            let imageString = model.pokemonImageUrlString,
+            let urlImage = URL(string: imageString) {
+
+            imageView.af.setImage(withURL: urlImage, cacheKey: imageString)
+        }
+
+        
         backGroundView.backgroundColor = model.pokemonColor
         model.types.forEach {
             stackView.addArrangedSubview(createLableType(title: $0.type.nameCapitalized))
@@ -91,6 +99,7 @@ final class PKListViewCell: UICollectionViewCell {
     private func addConstraints() {
         NSLayoutConstraint.activate([
             nameLabel.heightAnchor.constraint(equalToConstant: 30),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
             nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
             nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             backGroundView.topAnchor.constraint(equalTo: contentView.topAnchor),

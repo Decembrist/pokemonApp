@@ -1,6 +1,6 @@
 import UIKit
 
-class PKDetailView: UIView {
+final class PKDetailView: UIView {
     
     private var statisticView: PKStatisticBlockView?
     
@@ -62,7 +62,13 @@ class PKDetailView: UIView {
         bottomBackground.transform = CGAffineTransform(translationX: 0, y: 100)
         bottomBackground.alpha = 0
         
-        imagePokemon.af.setImage(withURL: model.pokeonImageUrl, cacheKey: model.pokemonImageUrlString)
+        guard
+            let imageString = model.pokemonImageUrlString,
+            let urlImage = URL(string: imageString) else {
+            return
+        }
+        
+        imagePokemon.af.setImage(withURL: urlImage, cacheKey: imageString)
         imagePokemon.alpha = 0
         
         titleLabel.text = model.name.uppercased()

@@ -5,6 +5,7 @@ protocol PKListViewProtocol: AnyObject {
     func showPokemonList(_ pokemonList: [PokemonModel])
     func retrivePokemonList()
     func setIndicatorLoader(_ value: Bool)
+    func scrollToTop(_ animated: Bool)
 }
 
 final class PKListView: UIView {
@@ -72,11 +73,15 @@ final class PKListView: UIView {
     }
     
     public func setPokemonList(_ pokemonList: [PokemonModel]) {
-        self.pokemonList += pokemonList
+        self.pokemonList = pokemonList
     }
     
     public func setIndicatorValue(_ value: Bool) {
         self.showIndicatorLoader = value
+    }
+    
+    public func scrollToTop(_ animated: Bool) {
+        collectionView.setContentOffset(.zero, animated: animated)
     }
     
 }

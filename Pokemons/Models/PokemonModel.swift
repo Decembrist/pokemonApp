@@ -15,7 +15,7 @@ struct PokemonModel: Decodable {
     }
     
     struct OfficialAtrworkModel: Decodable {
-        let frontDefault: String
+        let frontDefault: String?
     }
     
     struct OtherModel: Decodable {
@@ -49,12 +49,8 @@ struct PokemonModel: Decodable {
     let types: [TypesModel]
     let stats: [StatsModel]
 
-    var pokemonImageUrlString: String {
+    var pokemonImageUrlString: String? {
         sprites.other.officialArtwork.frontDefault
-    }
-    
-    var pokeonImageUrl: URL {
-        URL(string: pokemonImageUrlString)!
     }
     
     var pokemonColor: UIColor {

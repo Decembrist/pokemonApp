@@ -1,38 +1,33 @@
 import UIKit
 
 protocol PKListFilterViewProtocol: AnyObject {
-    func selectFilter()
+    func selectFilter(_ typeId: Int)
     func clearFilter()
     func retriveType()
-    func showType(_ typeList: [String])
+    func showType(_ typeList: [NameUrlModel])
 }
 
 final class PKListFilterView: UIView {
     
     public weak var delegate: PKListFilterViewProtocol?
     
-    private var typeList: [String] = [] {
+    private var typeList: [NameUrlModel] = [] {
         didSet {
-            for (index, name) in typeList.enumerated() {
-                let button = self.createScrollElem(title: name, tag: index)
+            for typeItem in typeList {
+                
+                let urlSubstring = typeItem.url.split(whereSeparator: { $0 == "/"})
+                
+                guard let last = urlSubstring.last, let typeId = Int(last) else { return }
+
+                let button = self.createScrollElem(title: typeItem.nameCapitalized, tag: typeId)
                 self.stackScrollElementList.addArrangedSubview(button)
             }
         }
     }
     
-    private lazy var filterContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
+    private lazy var filterContainer = ViewHelper.createEmptyView()
     
-    private lazy var filterViewScrollContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
+    private lazy var filterViewScrollContainer = ViewHelper.createEmptyView()
     
     private lazy var filterClearButton: UIButton = {
         
@@ -46,6 +41,8 @@ final class PKListFilterView: UIView {
         
         return button
     }()
+    
+    private lazy var clearButtonContainer = ViewHelper.createEmptyView()
     
     private lazy var filterScrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -72,16 +69,33 @@ final class PKListFilterView: UIView {
         
         setUpViews()
         addConstraint()
+        addGradientClearButtonContainer()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
+    private func addGradientClearButtonContainer() {
+        clearButtonContainer.layoutIfNeeded()
+        let colorTop =  UIColor(red: 1, green: 1, blue: 1, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1).cgColor
+                    
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+        gradientLayer.frame = clearButtonContainer.bounds
+        
+        clearButtonContainer.layer.insertSublayer(gradientLayer, at:0)
+    }
+    
     private func setUpViews() {
         addSubview(filterContainer)
-        filterContainer.addSubview(filterClearButton)
+        clearButtonContainer.addSubview(filterClearButton)
         filterContainer.addSubview(filterViewScrollContainer)
+        filterContainer.addSubview(clearButtonContainer)
+        
         filterViewScrollContainer.addSubview(filterScrollView)
         filterScrollView.addSubview(stackScrollElementList)
     }
@@ -93,20 +107,23 @@ final class PKListFilterView: UIView {
             filterContainer.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
             filterContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             
-            filterClearButton.topAnchor.constraint(equalTo: filterContainer.topAnchor),
-            filterClearButton.leftAnchor.constraint(equalTo: filterContainer.leftAnchor),
-            filterClearButton.bottomAnchor.constraint(equalTo: filterContainer.bottomAnchor),
-
+            clearButtonContainer.topAnchor.constraint(equalTo: filterContainer.topAnchor),
+            clearButtonContainer.leftAnchor.constraint(equalTo: filterContainer.leftAnchor),
+            clearButtonContainer.widthAnchor.constraint(equalToConstant: 74),
+            clearButtonContainer.bottomAnchor.constraint(equalTo: filterContainer.bottomAnchor),
+            
+            filterClearButton.topAnchor.constraint(equalTo: clearButtonContainer.topAnchor),
+            filterClearButton.leftAnchor.constraint(equalTo: clearButtonContainer.leftAnchor),
+            filterClearButton.bottomAnchor.constraint(equalTo: clearButtonContainer.bottomAnchor),
+            
             filterViewScrollContainer.topAnchor.constraint(equalTo: filterContainer.topAnchor),
-            filterViewScrollContainer.leftAnchor.constraint(equalTo: filterClearButton.rightAnchor, constant: 10),
+            filterViewScrollContainer.leftAnchor.constraint(equalTo: clearButtonContainer.rightAnchor),
             filterViewScrollContainer.rightAnchor.constraint(equalTo: filterContainer.rightAnchor),
             filterViewScrollContainer.bottomAnchor.constraint(equalTo: filterContainer.bottomAnchor),
-
             filterScrollView.topAnchor.constraint(equalTo: filterViewScrollContainer.topAnchor),
             filterScrollView.leftAnchor.constraint(equalTo: filterViewScrollContainer.leftAnchor),
             filterScrollView.rightAnchor.constraint(equalTo: filterViewScrollContainer.rightAnchor),
             filterScrollView.bottomAnchor.constraint(equalTo: filterViewScrollContainer.bottomAnchor),
-
             stackScrollElementList.topAnchor.constraint(equalTo: filterScrollView.topAnchor),
             stackScrollElementList.leftAnchor.constraint(equalTo: filterScrollView.leftAnchor),
             stackScrollElementList.rightAnchor.constraint(equalTo: filterScrollView.rightAnchor),
@@ -131,7 +148,7 @@ final class PKListFilterView: UIView {
     
     @objc
     private func selectFilter(_ sender: UIButton) {
-        delegate?.selectFilter()
+        delegate?.selectFilter(sender.tag)
     }
 
     @objc
@@ -139,7 +156,7 @@ final class PKListFilterView: UIView {
         delegate?.clearFilter()
     }
     
-    func setTypeList(_ typeList: [String]) {
+    func setTypeList(_ typeList: [NameUrlModel]) {
         self.typeList = typeList
     }
 }

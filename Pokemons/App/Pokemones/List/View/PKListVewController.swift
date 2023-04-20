@@ -1,17 +1,16 @@
 import UIKit
 
-typealias PKListViewPotocolCombine = PKListViewProtocol & PKListFilterViewProtocol
+typealias PKListViewPotocolCombine = PKListViewProtocol & PKListFilterViewProtocol & PKLoaderViewProtocol
 
 final class PKListViewController: UIViewController {
-    
     ///viper
     var presenter: PKListPresenter!
     let configurator = PKListConfigurator()
-    
     /// views
     private let pokemonListView = PKListView()
     private let titleView = PKListTitleView()
     private let filterView = PKListFilterView()
+    private let loaderView = PKLoaderView()
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -50,12 +49,13 @@ final class PKListViewController: UIViewController {
     private func addSubviews() {
         view.addSubviews([
             titleView,
-            pokemonListView, filterView
+            pokemonListView,
+            filterView,
+            loaderView
         ])
     }
     
     private func addConstraints() {
-        
         NSLayoutConstraint.activate([
             titleView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             titleView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
@@ -64,18 +64,22 @@ final class PKListViewController: UIViewController {
             pokemonListView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
             pokemonListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             pokemonListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            pokemonListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            pokemonListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
             
-            filterView.topAnchor.constraint(equalTo: pokemonListView.bottomAnchor, constant: -40),
+            filterView.topAnchor.constraint(equalTo: pokemonListView.bottomAnchor),
             filterView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             filterView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            
+            loaderView.topAnchor.constraint(equalTo: view.topAnchor),
+            loaderView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            loaderView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            loaderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-    }
-    
-       
+    }  
 }
 
 // MARK: VIPER
+/// ListView
 extension PKListViewController: PKListViewProtocol {
     
     func retrivePokemonList() {
@@ -93,12 +97,16 @@ extension PKListViewController: PKListViewProtocol {
     func setIndicatorLoader(_ value: Bool) {
         pokemonListView.setIndicatorValue(value)
     }
+    
+    func scrollToTop(_ animated: Bool) {
+        pokemonListView.scrollToTop(animated)
+    }
 }
-
+/// FilterView
 extension PKListViewController: PKListFilterViewProtocol {
     
-    func selectFilter() {
-        presenter.selectFilter()
+    func selectFilter(_ typeId: Int) {
+        presenter.selectFilter(typeId)
     }
     
     func clearFilter() {
@@ -109,8 +117,21 @@ extension PKListViewController: PKListFilterViewProtocol {
         presenter.retriveType()
     }
     
-    func showType(_ typeList: [String]) {
+    func showType(_ typeList: [NameUrlModel]) {
         filterView.setTypeList(typeList)
     }
+}
+/// LoaderView
+extension PKListViewController: PKLoaderViewProtocol {
+    func start() {
+        loaderView.start()
+    }
     
+    func stop() {
+        loaderView.stop()
+    }
+    
+    func toggleShowTabBar(hide: Bool) {
+        tabBarController?.tabBar.isHidden = hide
+    }
 }

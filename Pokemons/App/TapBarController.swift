@@ -7,21 +7,20 @@ class TapBarController: UITabBarController {
         
         UITabBar.appearance().backgroundColor = PKColorType.background
         
-        let startController = PKListViewController()
+        let pokemonController = PKListViewController()
         let settingsController = SettingsViewController()
         
-        startController.navigationItem.largeTitleDisplayMode = .automatic
+        pokemonController.navigationItem.largeTitleDisplayMode = .automatic
         settingsController.navigationItem.largeTitleDisplayMode = .automatic
         
-        let navStartController = UINavigationController(rootViewController: startController)
+        let navPokemonController = UINavigationController(rootViewController: pokemonController)
         let navSettingsController = UINavigationController(rootViewController: settingsController)
         
-        navStartController.tabBarItem = UITabBarItem(title: "All", image: UIImage(systemName: PKImageName.Pokemon.mainIcon.name), tag: 1)
+        navPokemonController.tabBarItem = UITabBarItem(title: "All", image: UIImage(systemName: PKImageName.Pokemon.mainIcon.name), tag: 1)
         navSettingsController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: PKImageName.Settings.mainIcon.name), tag: 2)
         
-        navStartController.navigationBar.prefersLargeTitles = true
         navSettingsController.navigationBar.prefersLargeTitles = true
         
-        setViewControllers([navStartController, navSettingsController], animated: true)
+        setViewControllers([navPokemonController, navSettingsController], animated: true)
     }
 }

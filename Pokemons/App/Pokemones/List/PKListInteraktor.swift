@@ -4,80 +4,53 @@ protocol PKListInteractorInputProtocol: AnyObject {
 
     var presenter: PKListInteractorOutputProtocol { get set }
     /// PKListView
-    func retriveResultIndicaotr()
     func retrivePokemon()
     /// PKFilterView
-    func selectFilter()
+    func selectFilter(_ typeId: Int)
     func clearFilter()
     func retriveType()
 }
 
 protocol PKListInteractorOutputProtocol: AnyObject {
     ///PKListView
-    func didRetrivePokemons(_ pokemonList: [PokemonModel])
-    func didRetriveLoadIndicator(_ value: Bool)
+    func didRetrivePokemons(_ response: PokemonResponseModel, reinit: Bool)
     /// PKFilterView
-    func didRetriveType(_ typeList: [String])
+    func didRetriveType(_ typeList: [NameUrlModel])
 }
 
 final class PKListInteractor: PKListInteractorInputProtocol {
     
     unowned var presenter: PKListInteractorOutputProtocol
     
-    private var isLoadingMoreCharacters: Bool = false
-
-    private var needShowIndicator: Bool = false
-    
-    private let asyncEmitter = DispatchGroup()
-    
     init(presenter: PKListInteractorOutputProtocol) {
         self.presenter = presenter
     }
 
-    func retriveResultIndicaotr() {
-        presenter.didRetriveLoadIndicator(needShowIndicator)
-    }
-
     func retrivePokemon() {
-        
-        guard !isLoadingMoreCharacters else {
-            return
-        }
-
-        isLoadingMoreCharacters = true
-
         PKService.getPokemonList { [weak self] responseModel in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.presenter.didRetrivePokemons(responseModel.pokemonList)
-            
-            let haveNextPage = responseModel.nextPage != nil
-            
-            strongSelf.needShowIndicator = haveNextPage
-            strongSelf.presenter.didRetriveLoadIndicator(haveNextPage)
-            
-            strongSelf.isLoadingMoreCharacters = false
+            self?.presenter.didRetrivePokemons(responseModel, reinit: false)
         }
-        
-
     }
     
     func retriveType() {
         PKService.getPokemonTypeList { [weak self] typeList in
             DispatchQueue.main.async {
-                self?.presenter.didRetriveType(typeList.compactMap{ $0.nameCapitalized })
+                self?.presenter.didRetriveType(typeList)
             }   
         }
     }
     
-    func selectFilter() {
-        print("action filter select")
+    func selectFilter(_ typeId: Int) {
+        PKService.getAllPokemonListByTypeId(typeId) { [weak self] pokemonList in
+            let model = PokemonResponseModel(pokemonList: pokemonList, nextPage: nil)
+            self?.presenter.didRetrivePokemons(model, reinit: true)
+            
+        }
     }
     
     func clearFilter() {
-        print("action filter clear")
+        PKService.getPokemonList { [weak self] responseModel in
+            self?.presenter.didRetrivePokemons(responseModel, reinit: true)
+        }
     }
-    
 }
