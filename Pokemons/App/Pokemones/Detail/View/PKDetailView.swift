@@ -4,16 +4,15 @@ final class PKDetailView: UIView {
     
     private var statisticView: PKStatisticBlockView?
     
-    private lazy var scrollContainer: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alwaysBounceVertical = true
-//        view.backgroundColor = .cyan.withAlphaComponent(0.3)
         
         return view
     }()
     
-    private lazy var empty = UIView.createAuthorisizeView()
+    private lazy var scrollContainer = UIView.createAutoresizeView()
     
     private lazy var imagePokemon: UIImageView = {
         let image = UIImageView()
@@ -84,45 +83,45 @@ final class PKDetailView: UIView {
         
         titleLabel.text = model.name.uppercased()
         
-//        let typeButton = createTypeButton(model.mainType, bgColor: model.pokemonColor)
-//        typeButton.transform = CGAffineTransform(translationX: 0, y: -20)
-//        typeButton.alpha = 0
-//        addSubview(typeButton)
-//
-//        UIView.animate(withDuration: 0.3) {
-//
-//            self.imagePokemon.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
-//            self.imagePokemon.alpha = 1
-//
-//            typeButton.transform = .identity
-//            typeButton.alpha = 1
-//
-//            self.bottomBackground.transform = .identity
-//            self.bottomBackground.alpha = 1
-//        }
-//
-//        NSLayoutConstraint.activate([
-//            typeButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-//            typeButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-//        ])
+        let typeButton = createTypeButton(model.mainType, bgColor: model.pokemonColor)
+        typeButton.transform = CGAffineTransform(translationX: 0, y: -20)
+        typeButton.alpha = 0
+        scrollContainer.addSubview(typeButton)
+
+        UIView.animate(withDuration: 0.3) {
+
+            self.imagePokemon.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
+            self.imagePokemon.alpha = 1
+
+            typeButton.transform = .identity
+            typeButton.alpha = 1
+
+            self.bottomBackground.transform = .identity
+            self.bottomBackground.alpha = 1
+        }
+
+        NSLayoutConstraint.activate([
+            typeButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            typeButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+        ])
         
-//        statisticView = PKStatisticBlockView(frame: .zero, model: model)
-//        guard let statisticView = statisticView else { return }
-//
-//        addSubview(statisticView)
-//
-//        statisticView.transform = CGAffineTransform(translationX: 0, y: 60)
-//        statisticView.alpha = 0
-//
-//        UIView.animate(withDuration: 0.3, delay: 0.3) {
-//            statisticView.transform = .identity
-//            statisticView.alpha = 1
-//        }
-//        NSLayoutConstraint.activate([
-//            statisticView.topAnchor.constraint(equalTo: typeButton.bottomAnchor, constant: 20),
-//            statisticView.widthAnchor.constraint(equalToConstant: 340),
-//            statisticView.centerXAnchor.constraint(equalTo: centerXAnchor),
-//        ])
+        statisticView = PKStatisticBlockView(frame: .zero, model: model)
+        guard let statisticView = statisticView else { return }
+
+        scrollContainer.addSubview(statisticView)
+
+        statisticView.transform = CGAffineTransform(translationX: 0, y: 60)
+        statisticView.alpha = 0
+
+        UIView.animate(withDuration: 0.3, delay: 0.3) {
+            statisticView.transform = .identity
+            statisticView.alpha = 1
+        }
+        NSLayoutConstraint.activate([
+            statisticView.topAnchor.constraint(equalTo: typeButton.bottomAnchor, constant: 20),
+            statisticView.widthAnchor.constraint(equalToConstant: 340),
+            statisticView.centerXAnchor.constraint(equalTo: centerXAnchor),
+        ])
 
     }
     
@@ -131,61 +130,41 @@ final class PKDetailView: UIView {
     }
     
     private func addConstraint() {
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.leftAnchor.constraint(equalTo: leftAnchor),
+            scrollView.rightAnchor.constraint(equalTo: rightAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            scrollContainer.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            scrollContainer.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
+            scrollContainer.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
 
-//        NSLayoutConstraint.activate([
-//            bottomBackground.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 1.4),
-//            bottomBackground.leftAnchor.constraint(equalTo: leftAnchor),
-//            bottomBackground.rightAnchor.constraint(equalTo: rightAnchor),
-//            bottomBackground.bottomAnchor.constraint(equalTo: bottomAnchor),
-//
-//
-//            imagePokemon.bottomAnchor.constraint(equalTo: bottomBackground.topAnchor, constant: 10),
-//            imagePokemon.centerXAnchor.constraint(equalTo: centerXAnchor),
-//
-//            titleLabel.topAnchor.constraint(equalTo: bottomBackground.topAnchor, constant: 40),
-//            titleLabel.leftAnchor.constraint(equalTo: leftAnchor),
-//            titleLabel.rightAnchor.constraint(equalTo: rightAnchor),
-//        ])
-        empty.backgroundColor = .red
-        NSLayoutConstraint.activate([
-            scrollContainer.topAnchor.constraint(equalTo: topAnchor),
-            scrollContainer.leftAnchor.constraint(equalTo: leftAnchor),
-            scrollContainer.rightAnchor.constraint(equalTo: rightAnchor),
-            scrollContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            empty.topAnchor.constraint(equalTo: scrollContainer.topAnchor),
-            empty.leftAnchor.constraint(equalTo: scrollContainer.leftAnchor),
-            empty.rightAnchor.constraint(equalTo: scrollContainer.rightAnchor),
-//            empty.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor),
-            empty.widthAnchor.constraint(equalTo: scrollContainer.widthAnchor),
-            empty.heightAnchor.constraint(equalTo: scrollContainer.heightAnchor),
+            scrollContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            scrollContainer.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
         ])
-        bottomBackground.backgroundColor = .yellow
+
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: empty.topAnchor, constant: 50),
-            titleLabel.centerXAnchor.constraint(equalTo: empty.centerXAnchor),
+            bottomBackground.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 1.2),
+            bottomBackground.leftAnchor.constraint(equalTo: scrollContainer.leftAnchor),
+            bottomBackground.rightAnchor.constraint(equalTo: scrollContainer.rightAnchor),
+            bottomBackground.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor),
             
-            bottomBackground.heightAnchor.constraint(equalToConstant: 200),
-            bottomBackground.leftAnchor.constraint(equalTo: empty.leftAnchor),
-            bottomBackground.rightAnchor.constraint(equalTo: empty.rightAnchor),
-            bottomBackground.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            titleLabel.topAnchor.constraint(equalTo: bottomBackground.topAnchor, constant: 50),
+            titleLabel.centerXAnchor.constraint(equalTo: scrollContainer.centerXAnchor),
+            
+            imagePokemon.bottomAnchor.constraint(equalTo: bottomBackground.topAnchor, constant: 10),
+            imagePokemon.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }
     
     private func setUpView() {
-        addSubview(scrollContainer)
-        scrollContainer.addSubview(empty)
-        empty.addSubviews([
+        addSubview(scrollView)
+        scrollView.addSubview(scrollContainer)
+        scrollContainer.addSubviews([
             bottomBackground,
+            imagePokemon,
             titleLabel
         ])
-        
-//        addSubviews([
-//            bottomBackground,
-//            imagePokemon,
-//            titleLabel
-//        ])
     }
-    
-    
 }

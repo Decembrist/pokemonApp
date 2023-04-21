@@ -12,7 +12,7 @@ public extension UIView {
         subviews.forEach { self.addSubview($0) }
     }
     
-    static func createAuthorisizeView() -> UIView {
+    static func createAutoresizeView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         

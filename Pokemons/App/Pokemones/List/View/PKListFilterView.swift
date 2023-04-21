@@ -25,9 +25,9 @@ final class PKListFilterView: UIView {
         }
     }
     
-    private lazy var filterContainer = UIView.createAuthorisizeView()
+    private lazy var filterContainer = UIView.createAutoresizeView()
     
-    private lazy var filterViewScrollContainer = UIView.createAuthorisizeView()
+    private lazy var filterViewScrollContainer = UIView.createAutoresizeView()
     
     private lazy var filterClearButton: UIButton = {
         
@@ -42,7 +42,7 @@ final class PKListFilterView: UIView {
         return button
     }()
     
-    private lazy var clearButtonContainer = UIView.createAuthorisizeView()
+    private lazy var clearButtonContainer = UIView.createAutoresizeView()
     
     private lazy var filterScrollView: UIScrollView = {
         let scroll = UIScrollView()

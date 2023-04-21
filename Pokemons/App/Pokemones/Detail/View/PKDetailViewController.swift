@@ -41,7 +41,6 @@ final class PKDetailViewController: UIViewController {
     
     private func setUpView() {
         view.addSubview(deteilView)
-//
 //        scrollView.addSubview(deteilView)
         
         NSLayoutConstraint.activate([
