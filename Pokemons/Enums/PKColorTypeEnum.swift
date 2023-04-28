@@ -5,7 +5,7 @@
 //  Created by Андрей Павлов on 20.04.2023.
 //
 
-import UIKit
+import UIKit.UIColor
 
 enum PKColorTypeEnum {
     

@@ -1,5 +1,4 @@
 import UIKit
-import Alamofire
 
 protocol PKDetailInteractorInputProtocol: AnyObject {
     var presenter: PKDetailInteractorOutputProtocol { get set }

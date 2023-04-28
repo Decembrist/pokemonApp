@@ -31,7 +31,6 @@ final class PKListViewController: UIViewController {
         setUpDelegate()
         addSubviews()
         addConstraints()
-        setUpNavBar()
         /// fetching data
         retrivePokemonList()
         retriveType()
@@ -40,10 +39,6 @@ final class PKListViewController: UIViewController {
     private func setUpDelegate() {
         pokemonListView.delegate = self
         filterView.delegate = self
-    }
-    
-    private func setUpNavBar() {
-        navigationController?.navigationBar.tintColor = .white
     }
     
     private func addSubviews() {

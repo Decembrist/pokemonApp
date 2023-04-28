@@ -19,6 +19,4 @@ final class PKDetailPresenter: PKDetailPresenterProtocol {
     }
 }
 
-extension PKDetailPresenter: PKDetailInteractorOutputProtocol {
-    
-}
+extension PKDetailPresenter: PKDetailInteractorOutputProtocol {}

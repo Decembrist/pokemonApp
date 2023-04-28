@@ -39,6 +39,12 @@
 		558BA91829D2D92B00C57E83 /* PKListTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA91729D2D92B00C57E83 /* PKListTitleView.swift */; };
 		558BA91A29D2D94300C57E83 /* PKListFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558BA91929D2D94300C57E83 /* PKListFilterView.swift */; };
 		55B5960229F15E520024FF44 /* PKColorTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5960129F15E520024FF44 /* PKColorTypeEnum.swift */; };
+		55B5960929FAABBA0024FF44 /* PKSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5960829FAABBA0024FF44 /* PKSearchTextField.swift */; };
+		55B5960D29FAB6AD0024FF44 /* PKSearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5960C29FAB6AD0024FF44 /* PKSearchRouter.swift */; };
+		55B5960F29FAB6BB0024FF44 /* PKSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5960E29FAB6BB0024FF44 /* PKSearchPresenter.swift */; };
+		55B5961129FAB7040024FF44 /* PKSearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5961029FAB7040024FF44 /* PKSearchInteractor.swift */; };
+		55B5961329FAB7130024FF44 /* PKSearchConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5961229FAB7130024FF44 /* PKSearchConfigurator.swift */; };
+		55B5961529FAD3ED0024FF44 /* PKSearchTextFieldButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5961429FAD3ED0024FF44 /* PKSearchTextFieldButton.swift */; };
 		55D32CFA29D32BCA006D9C51 /* PKDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D32CF929D32BCA006D9C51 /* PKDetailView.swift */; };
 		55D32CFC29D442A9006D9C51 /* PKStatisticBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D32CFB29D442A9006D9C51 /* PKStatisticBlockView.swift */; };
 		55D32CFF29D6E453006D9C51 /* PKFooterLoadingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D32CFE29D6E453006D9C51 /* PKFooterLoadingCollectionReusableView.swift */; };
@@ -84,6 +90,12 @@
 		558BA91729D2D92B00C57E83 /* PKListTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKListTitleView.swift; sourceTree = "<group>"; };
 		558BA91929D2D94300C57E83 /* PKListFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKListFilterView.swift; sourceTree = "<group>"; };
 		55B5960129F15E520024FF44 /* PKColorTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKColorTypeEnum.swift; sourceTree = "<group>"; };
+		55B5960829FAABBA0024FF44 /* PKSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSearchTextField.swift; sourceTree = "<group>"; };
+		55B5960C29FAB6AD0024FF44 /* PKSearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSearchRouter.swift; sourceTree = "<group>"; };
+		55B5960E29FAB6BB0024FF44 /* PKSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSearchPresenter.swift; sourceTree = "<group>"; };
+		55B5961029FAB7040024FF44 /* PKSearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSearchInteractor.swift; sourceTree = "<group>"; };
+		55B5961229FAB7130024FF44 /* PKSearchConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSearchConfigurator.swift; sourceTree = "<group>"; };
+		55B5961429FAD3ED0024FF44 /* PKSearchTextFieldButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSearchTextFieldButton.swift; sourceTree = "<group>"; };
 		55D32CF929D32BCA006D9C51 /* PKDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKDetailView.swift; sourceTree = "<group>"; };
 		55D32CFB29D442A9006D9C51 /* PKStatisticBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKStatisticBlockView.swift; sourceTree = "<group>"; };
 		55D32CFE29D6E453006D9C51 /* PKFooterLoadingCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKFooterLoadingCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -113,7 +125,10 @@
 			isa = PBXGroup;
 			children = (
 				5551854229F01DF4007B3CB1 /* View */,
-				5551854029F0181B007B3CB1 /* PKSearchViewController.swift */,
+				55B5960C29FAB6AD0024FF44 /* PKSearchRouter.swift */,
+				55B5960E29FAB6BB0024FF44 /* PKSearchPresenter.swift */,
+				55B5961029FAB7040024FF44 /* PKSearchInteractor.swift */,
+				55B5961229FAB7130024FF44 /* PKSearchConfigurator.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -121,6 +136,9 @@
 		5551854229F01DF4007B3CB1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				55B5960829FAABBA0024FF44 /* PKSearchTextField.swift */,
+				5551854029F0181B007B3CB1 /* PKSearchViewController.swift */,
+				55B5961429FAD3ED0024FF44 /* PKSearchTextFieldButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -179,6 +197,7 @@
 		558BA8D329C9B53800C57E83 /* Pokemons */ = {
 			isa = PBXGroup;
 			children = (
+				55B5960529FAAB3E0024FF44 /* Layers */,
 				5556D90C29E5852500E208BA /* Extensions */,
 				5556D90329E42DEB00E208BA /* Service */,
 				5556D8FC29E0480D00E208BA /* ApiClient */,
@@ -265,6 +284,29 @@
 				55D32D0629DDD63F006D9C51 /* List */,
 			);
 			path = Pokemones;
+			sourceTree = "<group>";
+		};
+		55B5960529FAAB3E0024FF44 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				55B5960729FAAB5E0024FF44 /* UITextField */,
+				55B5960629FAAB4E0024FF44 /* UIView */,
+			);
+			path = Layers;
+			sourceTree = "<group>";
+		};
+		55B5960629FAAB4E0024FF44 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
+		55B5960729FAAB5E0024FF44 /* UITextField */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UITextField;
 			sourceTree = "<group>";
 		};
 		55D32CF529D31B56006D9C51 /* Settings */ = {
@@ -393,6 +435,7 @@
 				55D32D0329DAFE57006D9C51 /* PKListInteraktor.swift in Sources */,
 				5556D91329E7EFDB00E208BA /* AllListResponse.swift in Sources */,
 				55D32D0129DAFE46006D9C51 /* PKListPresenter.swift in Sources */,
+				55B5961329FAB7130024FF44 /* PKSearchConfigurator.swift in Sources */,
 				558BA8D529C9B53800C57E83 /* AppDelegate.swift in Sources */,
 				558BA8EF29C9D93800C57E83 /* PKListViewCell.swift in Sources */,
 				558BA8D729C9B53800C57E83 /* SceneDelegate.swift in Sources */,
@@ -404,11 +447,15 @@
 				55D32CFA29D32BCA006D9C51 /* PKDetailView.swift in Sources */,
 				5556D90729E4392E00E208BA /* PokemonResponseModel.swift in Sources */,
 				558BA8FA29C9FE2300C57E83 /* PokemonModel.swift in Sources */,
+				55B5960D29FAB6AD0024FF44 /* PKSearchRouter.swift in Sources */,
 				55D32CFF29D6E453006D9C51 /* PKFooterLoadingCollectionReusableView.swift in Sources */,
 				5556D90929E5452B00E208BA /* PKPager.swift in Sources */,
+				55B5960929FAABBA0024FF44 /* PKSearchTextField.swift in Sources */,
+				55B5961529FAD3ED0024FF44 /* PKSearchTextFieldButton.swift in Sources */,
 				558BA8F729C9F5A600C57E83 /* HapticsManager.swift in Sources */,
 				55D32D0E29DDD758006D9C51 /* PKDetailPresenter.swift in Sources */,
 				558BA91A29D2D94300C57E83 /* PKListFilterView.swift in Sources */,
+				55B5960F29FAB6BB0024FF44 /* PKSearchPresenter.swift in Sources */,
 				5556D91729E93C9E00E208BA /* PKLoaderView.swift in Sources */,
 				5556D90B29E5628300E208BA /* PKImageName.swift in Sources */,
 				5556D8FB29E038D900E208BA /* PKEndpoint.swift in Sources */,
@@ -417,6 +464,7 @@
 				5556D91529E7FFC200E208BA /* TypePokemonResponse.swift in Sources */,
 				558BA91629D2D8D200C57E83 /* PKListView.swift in Sources */,
 				5556D90029E0482D00E208BA /* PKNetworkManager.swift in Sources */,
+				55B5961129FAB7040024FF44 /* PKSearchInteractor.swift in Sources */,
 				55D32D1229DEEBC0006D9C51 /* PKListConfigurator.swift in Sources */,
 				558BA8FC29C9FF2800C57E83 /* NameUrlModel.swift in Sources */,
 				5556D91129E6BFFB00E208BA /* View.swift in Sources */,

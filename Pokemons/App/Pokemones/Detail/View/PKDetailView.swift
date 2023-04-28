@@ -4,11 +4,17 @@ final class PKDetailView: UIView {
     
     private var statisticView: PKStatisticBlockView?
     
+    private var screenHeight: CGFloat {
+        UIScreen.main.bounds.height
+    }
+    
+    private lazy var marginTopWhiteBackground = self.screenHeight / 5
+    
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alwaysBounceVertical = true
-        
+        view.delegate = self
         return view
     }()
     
@@ -142,13 +148,11 @@ final class PKDetailView: UIView {
 
             scrollContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             scrollContainer.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-        ])
-
-        NSLayoutConstraint.activate([
-            bottomBackground.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 1.2),
+        
+            bottomBackground.heightAnchor.constraint(equalToConstant: screenHeight),
             bottomBackground.leftAnchor.constraint(equalTo: scrollContainer.leftAnchor),
             bottomBackground.rightAnchor.constraint(equalTo: scrollContainer.rightAnchor),
-            bottomBackground.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor),
+            bottomBackground.bottomAnchor.constraint(equalTo: scrollContainer.bottomAnchor, constant: marginTopWhiteBackground),
             
             titleLabel.topAnchor.constraint(equalTo: bottomBackground.topAnchor, constant: 50),
             titleLabel.centerXAnchor.constraint(equalTo: scrollContainer.centerXAnchor),
@@ -167,4 +171,14 @@ final class PKDetailView: UIView {
             titleLabel
         ])
     }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        print(scrollView.frame.height)
+//    }
+}
+
+extension PKDetailView: UIScrollViewDelegate {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print(scrollView.contentOffset)
+//    }
 }
