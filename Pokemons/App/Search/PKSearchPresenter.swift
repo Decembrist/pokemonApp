@@ -6,10 +6,12 @@ protocol PKSearchPresenterProtocol: AnyObject {
     var interactor: PKSearchInteractorInputProtocol? { get set }
     var router: PKSearchRouterProtocol? { get set }
     
-    func retrivePokemon(by name: String)
+    func retrivePokemon(by name: String?)
 }
 
 final class PKSearchPresenter: PKSearchPresenterProtocol {
+    
+    private let countMinLengthChars = 3
     
     unowned var viewController: PKSearchViewController
     
@@ -22,9 +24,22 @@ final class PKSearchPresenter: PKSearchPresenterProtocol {
 }
 
 extension PKSearchPresenter {
-    func retrivePokemon(by name: String) {
-        print(name)
+    func retrivePokemon(by name: String?) {
+        HapticsManager.shared.selectionVibrate()
+        guard let searchText = name, searchText.count > countMinLengthChars else { return }
+        viewController.start()
+        viewController.toggleShowTabBar(hide: true)
+        interactor?.retrivePokemon(by: searchText.lowercased())
     }
 }
 
-extension PKSearchPresenter: PKSearchInteractorOutputProtocol {}
+extension PKSearchPresenter: PKSearchInteractorOutputProtocol {
+    func didRetrivePokemon(_ response: SearchPokemonresponce?) {
+        if let _ = response?.name {
+            viewController.clearTextField()
+        }
+        viewController.showResult(response)
+        viewController.toggleShowTabBar(hide: false)
+        viewController.stop()
+    }
+}

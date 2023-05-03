@@ -4,18 +4,11 @@ class PKSearchViewController: UIViewController {
     
     public var presenter: PKSearchPresenter?
     private let configurator = PKSearchConfigurator()
-
-    private lazy var noResultImage: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFit
-        image.image = UIImage(named: "no-result")
-        
-        return image
-    }()
         
     private let searchTextField = PKSearchTextField(placeholder: "Find your pokemon")
     private let searchButton = PKSearchTextFieldButton()
+    private let resultSearchView = PKSearchResultView()
+    private let loaderView = PKLoaderView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +23,14 @@ class PKSearchViewController: UIViewController {
 private extension PKSearchViewController {
     func setUpViews() {
         configurator.configure(with: self)
-        
         setUpTitle()
         setUpSearchField()
         addActions()
         view.backgroundColor = PKColorTypeEnum.background.uiColor
         view.addSubviews([
             searchTextField
-//            , noResultImage
+            , resultSearchView
+            , loaderView
         ])
         addConstraint()
     }
@@ -61,28 +54,58 @@ private extension PKSearchViewController {
 private extension PKSearchViewController {
     func addConstraint() {
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        resultSearchView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchTextField.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
             searchTextField.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            searchTextField.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8)
+            searchTextField.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8),
+            
+            resultSearchView.heightAnchor.constraint(equalToConstant: 200),
+            resultSearchView.bottomAnchor.constraint(equalTo: searchTextField.topAnchor),
+            resultSearchView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            
+            loaderView.topAnchor.constraint(equalTo: view.topAnchor),
+            loaderView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            loaderView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            loaderView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 }
 extension PKSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        
+        presenter?.retrivePokemon(by: textField.text)
         return true
     }
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        print("qwe")
+//        print()
+    }
+}
+extension PKSearchViewController: PKLoaderViewProtocol {
+    func start() {
+        self.loaderView.start()
+    }
+    
+    func stop() {
+        self.loaderView.stop()
+    }
+    
+    func toggleShowTabBar(hide: Bool) {
+        self.tabBarController?.tabBar.isHidden = hide
     }
 }
 //MARK: - VIPER
 extension PKSearchViewController {
     @objc
     private func actionSearch() {
-        guard let searchText = searchTextField.text else { return }
-        presenter?.retrivePokemon(by: searchText)
+        presenter?.retrivePokemon(by: searchTextField.text)
+    }
+    
+    func showResult(_ response: SearchPokemonresponce?) {
+        resultSearchView.setContent(response)
+    }
+    
+    func clearTextField() {
+        searchTextField.text = ""
     }
 }

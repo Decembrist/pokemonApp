@@ -1,10 +1,3 @@
-//
-//  PKLoaderView.swift
-//  Pokemons
-//
-//  Created by Андрей Павлов on 14.04.2023.
-//
-
 import UIKit
 
 protocol PKLoaderViewProtocol: AnyObject {
@@ -72,8 +65,12 @@ final class PKLoaderView: UIView {
     }
     
     public func stop() {
-        loader.stopAnimating()
-        isHidden = true
+//        DispatchQueue.main.async {
+            self.loader.stopAnimating()
+            self.isHidden = true
+//        }
+        
+        
         
         UIView.animate(withDuration: 0.3) {
             self.alpha = 0

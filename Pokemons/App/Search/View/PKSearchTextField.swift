@@ -1,4 +1,3 @@
-
 import UIKit
 
 class PKSearchTextField: UITextField {
@@ -20,7 +19,6 @@ class PKSearchTextField: UITextField {
     private func setUpTextField(placeholder: String) {
         textColor = .black
         
-        
         layer.cornerRadius = 10
         backgroundColor = PKColorTypeEnum.background.uiColor
         
@@ -34,6 +32,8 @@ class PKSearchTextField: UITextField {
         attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
         
         heightAnchor.constraint(equalToConstant: self.height).isActive = true
+        returnKeyType = .search
+        
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {

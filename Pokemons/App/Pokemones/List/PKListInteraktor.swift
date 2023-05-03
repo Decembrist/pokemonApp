@@ -44,7 +44,6 @@ final class PKListInteractor: PKListInteractorInputProtocol {
         PKService.getAllPokemonListByTypeId(typeId) { [weak self] pokemonList in
             let model = PokemonResponseModel(pokemonList: pokemonList, nextPage: nil)
             self?.presenter.didRetrivePokemons(model, reinit: true)
-            
         }
     }
     
