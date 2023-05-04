@@ -1,10 +1,3 @@
-//
-//  View.swift
-//  Pokemons
-//
-//  Created by Андрей Павлов on 12.04.2023.
-//
-
 import UIKit
 
 public extension UIView {
@@ -12,6 +5,7 @@ public extension UIView {
         subviews.forEach { self.addSubview($0) }
     }
     
+    //MARK: - Static func
     static func createAutoresizeView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

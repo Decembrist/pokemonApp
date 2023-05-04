@@ -1,15 +1,7 @@
-//
-//  SettingsView.swift
-//  Pokemons
-//
-//  Created by Андрей Павлов on 17.04.2023.
-//
-
 import UIKit
 
 class SettingsView: UIView {
 
-    
     private lazy var containerY: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -18,7 +10,6 @@ class SettingsView: UIView {
         
         return stack
     }()
-    
     
     private func createSection(name: String) -> UIStackView {
         let stack = UIStackView()
@@ -30,7 +21,6 @@ class SettingsView: UIView {
         label.textColor = .black
         
         let switcher = UISwitch()
-//        switcher.
         
         stack.addArrangedSubview(label)
         stack.addArrangedSubview(switcher)
@@ -42,29 +32,26 @@ class SettingsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setUpLayer()
-        
-        
-        addConstraint()
     }
     
+    @available (*, unavailable)
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-    private func setUpLayer() {
-        translatesAutoresizingMaskIntoConstraints = false
-        
+}
+private extension SettingsView {
+    func setUpLayer() {
         addSubview(containerY)
-        
         for name in sections {
             containerY.addArrangedSubview(createSection(name: name))
         }
-        
+        addConstraint()
     }
-
-    private func addConstraint() {
+}
+//MARK: - Add constraint
+private extension SettingsView {
+    func addConstraint() {
         NSLayoutConstraint.activate([
             containerY.topAnchor.constraint(equalTo: topAnchor),
             containerY.leftAnchor.constraint(equalTo: leftAnchor),

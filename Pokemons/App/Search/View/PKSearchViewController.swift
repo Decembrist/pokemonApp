@@ -1,6 +1,6 @@
 import UIKit
 
-class PKSearchViewController: UIViewController {
+final class PKSearchViewController: UIViewController {
     
     public var presenter: PKSearchPresenter?
     private let configurator = PKSearchConfigurator()
@@ -71,16 +71,15 @@ private extension PKSearchViewController {
         ])
     }
 }
+//MARK: - Text Field Delegate
 extension PKSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         presenter?.retrivePokemon(by: textField.text)
         return true
     }
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-//        print()
-    }
 }
+//MARK: - Loader view
 extension PKSearchViewController: PKLoaderViewProtocol {
     func start() {
         self.loaderView.start()

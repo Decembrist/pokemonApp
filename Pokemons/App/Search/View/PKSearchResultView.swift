@@ -1,6 +1,6 @@
 import UIKit
 
-class PKSearchResultView: UIView {
+final class PKSearchResultView: UIView {
 
     private let defaultText = "Pokemon not find :("
     
@@ -35,8 +35,10 @@ class PKSearchResultView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func setUpView() {
+}
+//MARK: SetUp View
+private extension PKSearchResultView {
+    func setUpView() {
         addSubviews([resultImage, textLabel])
         NSLayoutConstraint.activate([
             resultImage.topAnchor.constraint(equalTo: topAnchor),
@@ -48,8 +50,10 @@ class PKSearchResultView: UIView {
             textLabel.rightAnchor.constraint(equalTo: rightAnchor),
         ])
     }
-    
-    public func setContent(_ model: SearchPokemonresponce?) {
+}
+//MARK: - Functions
+extension PKSearchResultView {
+    func setContent(_ model: SearchPokemonresponce?) {
         DispatchQueue.main.async {
             self.textLabel.text = model?.name ?? self.defaultText
             guard let image = model?.imageData else {
@@ -60,7 +64,7 @@ class PKSearchResultView: UIView {
         }
     }
     
-    public func clearTextField() {
+    func clearTextField() {
         textLabel.text = ""
     }
 }

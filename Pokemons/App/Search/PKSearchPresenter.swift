@@ -8,7 +8,6 @@ protocol PKSearchPresenterProtocol: AnyObject {
     
     func retrivePokemon(by name: String?)
 }
-
 final class PKSearchPresenter: PKSearchPresenterProtocol {
     
     private let countMinLengthChars = 3
@@ -22,7 +21,6 @@ final class PKSearchPresenter: PKSearchPresenterProtocol {
         self.viewController = viewController
     }
 }
-
 extension PKSearchPresenter {
     func retrivePokemon(by name: String?) {
         HapticsManager.shared.selectionVibrate()
@@ -32,7 +30,6 @@ extension PKSearchPresenter {
         interactor?.retrivePokemon(by: searchText.lowercased())
     }
 }
-
 extension PKSearchPresenter: PKSearchInteractorOutputProtocol {
     func didRetrivePokemon(_ response: SearchPokemonresponce?) {
         if let _ = response?.name {
