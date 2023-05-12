@@ -18,5 +18,4 @@ final class PKListConfigurator: PKListConfiguratorProtocol {
         presenter.interactor = interactor
         presenter.router = router
     }
-    
 }

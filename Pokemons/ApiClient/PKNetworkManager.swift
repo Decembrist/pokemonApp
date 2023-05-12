@@ -27,4 +27,10 @@ final class PKNetworkManager {
             }
         }
     }
+    
+    public func requestImage(_ url: String, completion: (@escaping (Data?) -> Void)) {
+        AF.download(url).responseData { response in
+            completion(response.value)
+        }
+    }
 }

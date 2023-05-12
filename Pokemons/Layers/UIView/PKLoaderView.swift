@@ -1,13 +1,6 @@
-//
-//  PKLoaderView.swift
-//  Pokemons
-//
-//  Created by Андрей Павлов on 14.04.2023.
-//
-
 import UIKit
 
-protocol PKLoaderViewProtocol {
+protocol PKLoaderViewProtocol: AnyObject {
     func start()
     func stop()
     func toggleShowTabBar(hide: Bool)
@@ -46,7 +39,7 @@ final class PKLoaderView: UIView {
     
     private func setUpLayer() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = PKColorType.background.withAlphaComponent(0.1)
+        backgroundColor = PKColorTypeEnum.background.uiColor.withAlphaComponent(0.1)
         isHidden = true
         alpha = 0
     }
@@ -72,8 +65,12 @@ final class PKLoaderView: UIView {
     }
     
     public func stop() {
-        loader.stopAnimating()
-        isHidden = true
+//        DispatchQueue.main.async {
+            self.loader.stopAnimating()
+            self.isHidden = true
+//        }
+        
+        
         
         UIView.animate(withDuration: 0.3) {
             self.alpha = 0

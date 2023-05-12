@@ -4,7 +4,7 @@ import AlamofireImage
 
 final class PKListViewCell: UICollectionViewCell {
     
-    static let cellIdentifier = "PokemonListViewCell"
+    static let cellIdentifier = String(describing: PKListViewCell.self)
     
     private lazy var imageView: UIImageView = {
         let image = UIImageView()
@@ -41,19 +41,26 @@ final class PKListViewCell: UICollectionViewCell {
         
         return stackView
     }()
-    
+    //MARK: - initial
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setUpView()
+    }
+    @available (*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+}
+//MARK: - SetUp View
+private extension PKListViewCell {
+    func setUpView() {
         addSubviews()
         setUpLayer()
         addConstraints()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
+}
+//MARK: - Other Func
+extension PKListViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.af.cancelImageRequest()
@@ -75,7 +82,6 @@ final class PKListViewCell: UICollectionViewCell {
             imageView.af.setImage(withURL: urlImage, cacheKey: imageString)
         }
 
-        
         backGroundView.backgroundColor = model.pokemonColor
         model.types.forEach {
             stackView.addArrangedSubview(createLableType(title: $0.type.nameCapitalized))
@@ -96,7 +102,24 @@ final class PKListViewCell: UICollectionViewCell {
         contentView.clipsToBounds = true
     }
     
-    private func addConstraints() {
+    private func createLableType(title: String) -> UILabel {
+        let label = CustomLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = title
+        label.backgroundColor = UIColor(named: "CardTipBG")
+        label.layer.cornerRadius = 10
+        label.layer.masksToBounds = true
+        label.font = .systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .white
+        label.padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        label.adjustsFontSizeToFitWidth = true
+        
+        return label
+    }
+}
+//MARK: - Add Constraints
+private extension PKListViewCell {
+    func addConstraints() {
         NSLayoutConstraint.activate([
             nameLabel.heightAnchor.constraint(equalToConstant: 30),
             nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -113,20 +136,4 @@ final class PKListViewCell: UICollectionViewCell {
             stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
         ])
     }
-    
-    private func createLableType(title: String) -> UILabel {
-        let label = CustomLabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = title
-        label.backgroundColor = UIColor(named: "CardTipBG")
-        label.layer.cornerRadius = 10
-        label.layer.masksToBounds = true
-        label.font = .systemFont(ofSize: 16, weight: .medium)
-        label.textColor = .white
-        label.padding = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        label.adjustsFontSizeToFitWidth = true
-        
-        return label
-    }
-    
 }

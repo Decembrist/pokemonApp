@@ -16,5 +16,4 @@ final class PKDetailConfigurator: PKDetailConfiguratorProtocol {
         presenter.interactor = interactor
         presenter.router = router
     }
-    
 }

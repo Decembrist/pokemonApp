@@ -10,6 +10,7 @@ import Foundation
 enum PKEndpoint {
     case pokemonList
     case pokemonDetail(Int)
+    case pokemonDetailByName(String)
     case typeList
     case typeDetail(Int)
     
@@ -19,6 +20,8 @@ enum PKEndpoint {
             return "https://pokeapi.co/api/v2/pokemon"
         case .pokemonDetail(let id):
             return "https://pokeapi.co/api/v2/pokemon/\(id)/"
+        case .pokemonDetailByName(let name):
+            return "https://pokeapi.co/api/v2/pokemon/\(name)/"
         case .typeList:
             return "https://pokeapi.co/api/v2/type/"
         case .typeDetail(let id):

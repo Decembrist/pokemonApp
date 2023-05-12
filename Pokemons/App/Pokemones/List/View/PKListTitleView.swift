@@ -11,19 +11,27 @@ final class PKListTitleView: UIView {
         
         return label
     }()
-    
+    //MARK: - Initial
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setUpViews()
+    }
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+}
+//MARK: - SetUp View
+private extension PKListTitleView {
+    func setUpViews() {
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(titleLable)
         addConstraint()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
-    private func addConstraint() {
+}
+//MARK: - Add constraints
+private extension PKListTitleView {
+    func addConstraint() {
         NSLayoutConstraint.activate([
             titleLable.topAnchor.constraint(equalTo: topAnchor, constant: 30),
             titleLable.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
@@ -31,5 +39,4 @@ final class PKListTitleView: UIView {
             titleLable.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
         ])
     }
-
 }
