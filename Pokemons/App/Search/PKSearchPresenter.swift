@@ -24,9 +24,10 @@ final class PKSearchPresenter: PKSearchPresenterProtocol {
 extension PKSearchPresenter {
     func retrivePokemon(by name: String?) {
         HapticsManager.shared.selectionVibrate()
-        guard let searchText = name, searchText.count > countMinLengthChars else { return }
+        guard var searchText = name, searchText.count > countMinLengthChars else { return }
         viewController.start()
         viewController.toggleShowTabBar(hide: true)
+        searchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         interactor?.retrivePokemon(by: searchText.lowercased())
     }
 }

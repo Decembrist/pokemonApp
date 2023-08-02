@@ -15,17 +15,24 @@ enum PKEndpoint {
     case typeDetail(Int)
     
     var endpoint: String {
+        var urlComponents = URLComponents()
+        urlComponents.host = "pokeapi.co"
+        urlComponents.scheme = "https"
+        urlComponents.path = "/api/v2"
+        
         switch self {
         case .pokemonList:
-            return "https://pokeapi.co/api/v2/pokemon"
+            urlComponents.path += "/pokemon"
         case .pokemonDetail(let id):
-            return "https://pokeapi.co/api/v2/pokemon/\(id)/"
+            urlComponents.path += "/pokemon/\(id)/"
         case .pokemonDetailByName(let name):
-            return "https://pokeapi.co/api/v2/pokemon/\(name)/"
+            urlComponents.path += "/pokemon/\(name)/"
         case .typeList:
-            return "https://pokeapi.co/api/v2/type/"
+            urlComponents.path += "/type"
         case .typeDetail(let id):
-            return "https://pokeapi.co/api/v2/type/\(id)/"
+            urlComponents.path += "/type/\(id)/"
         }
+        
+        return urlComponents.url!.absoluteString
     }
 }
