@@ -1,5 +1,6 @@
 import UIKit
 
+//MARK: - Filter Protocol
 protocol PKListFilterViewProtocol: AnyObject {
     func selectFilter(_ typeId: Int)
     func clearFilter()
@@ -25,9 +26,9 @@ final class PKListFilterView: UIView {
         }
     }
     
-    private lazy var filterContainer = ViewHelper.createEmptyView()
+    private lazy var filterContainer = UIView.createAutoresizeView()
     
-    private lazy var filterViewScrollContainer = ViewHelper.createEmptyView()
+    private lazy var filterViewScrollContainer = UIView.createAutoresizeView()
     
     private lazy var filterClearButton: UIButton = {
         
@@ -42,7 +43,7 @@ final class PKListFilterView: UIView {
         return button
     }()
     
-    private lazy var clearButtonContainer = ViewHelper.createEmptyView()
+    private lazy var clearButtonContainer = UIView.createAutoresizeView()
     
     private lazy var filterScrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -61,22 +62,41 @@ final class PKListFilterView: UIView {
         
         return stack
     }()
-    
+    //MARK: - initial
     override init(frame: CGRect) {
         super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = PKColorType.background
-        
         setUpViews()
-        addConstraint()
-        addGradientClearButtonContainer()
     }
-    
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError()
     }
     
-    private func addGradientClearButtonContainer() {
+    public func setTypeList(_ typeList: [NameUrlModel]) {
+        self.typeList = typeList
+    }
+}
+//MARK: - SetUp Views
+private extension PKListFilterView {
+    func setUpViews() {
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = PKColorTypeEnum.background.uiColor
+        
+        addSubview(filterContainer)
+        clearButtonContainer.addSubview(filterClearButton)
+        filterContainer.addSubview(filterViewScrollContainer)
+        filterContainer.addSubview(clearButtonContainer)
+        
+        filterViewScrollContainer.addSubview(filterScrollView)
+        filterScrollView.addSubview(stackScrollElementList)
+        
+        addConstraint()
+        addGradientClearButtonContainer()
+    }
+}
+//MARK: - Functions
+private extension PKListFilterView {
+    func addGradientClearButtonContainer() {
         clearButtonContainer.layoutIfNeeded()
         let colorTop =  UIColor(red: 1, green: 1, blue: 1, alpha: 1.0).cgColor
         let colorBottom = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1).cgColor
@@ -90,17 +110,34 @@ final class PKListFilterView: UIView {
         clearButtonContainer.layer.insertSublayer(gradientLayer, at:0)
     }
     
-    private func setUpViews() {
-        addSubview(filterContainer)
-        clearButtonContainer.addSubview(filterClearButton)
-        filterContainer.addSubview(filterViewScrollContainer)
-        filterContainer.addSubview(clearButtonContainer)
+    func createScrollElem(title: String, tag: Int) -> UIButton {
+        var buttonConfiguration = UIButton.Configuration.filled()
+        buttonConfiguration.titlePadding = 10
+        buttonConfiguration.cornerStyle = .capsule
+        buttonConfiguration.title = title
+        buttonConfiguration.baseForegroundColor = .white
+        buttonConfiguration.baseBackgroundColor = UIColor(named: title)
         
-        filterViewScrollContainer.addSubview(filterScrollView)
-        filterScrollView.addSubview(stackScrollElementList)
+        let button = UIButton(configuration: buttonConfiguration)
+        button.addTarget(self, action: #selector(selectFilter(_:)), for: .touchUpInside)
+        button.tag = tag
+        
+        return button
     }
     
-    private func addConstraint() {
+    @objc
+    func selectFilter(_ sender: UIButton) {
+        delegate?.selectFilter(sender.tag)
+    }
+
+    @objc
+    func clearFilter() {
+        delegate?.clearFilter()
+    }
+}
+//MARK: - Add Constraints
+private extension PKListFilterView {
+    func addConstraint() {
         NSLayoutConstraint.activate([
             filterContainer.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             filterContainer.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
@@ -129,34 +166,5 @@ final class PKListFilterView: UIView {
             stackScrollElementList.rightAnchor.constraint(equalTo: filterScrollView.rightAnchor),
             stackScrollElementList.bottomAnchor.constraint(equalTo: filterScrollView.bottomAnchor),
         ])
-    }
-    
-    private func createScrollElem(title: String, tag: Int) -> UIButton {
-        var buttonConfiguration = UIButton.Configuration.filled()
-        buttonConfiguration.titlePadding = 10
-        buttonConfiguration.cornerStyle = .capsule
-        buttonConfiguration.title = title
-        buttonConfiguration.baseForegroundColor = .white
-        buttonConfiguration.baseBackgroundColor = UIColor(named: title)
-        
-        let button = UIButton(configuration: buttonConfiguration)
-        button.addTarget(self, action: #selector(selectFilter(_:)), for: .touchUpInside)
-        button.tag = tag
-        
-        return button
-    }
-    
-    @objc
-    private func selectFilter(_ sender: UIButton) {
-        delegate?.selectFilter(sender.tag)
-    }
-
-    @objc
-    private func clearFilter() {
-        delegate?.clearFilter()
-    }
-    
-    func setTypeList(_ typeList: [NameUrlModel]) {
-        self.typeList = typeList
     }
 }

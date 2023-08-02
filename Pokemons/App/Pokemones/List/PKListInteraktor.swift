@@ -12,20 +12,22 @@ protocol PKListInteractorInputProtocol: AnyObject {
 }
 
 protocol PKListInteractorOutputProtocol: AnyObject {
-    ///PKListView
+    /// PKListView
     func didRetrivePokemons(_ response: PokemonResponseModel, reinit: Bool)
     /// PKFilterView
     func didRetriveType(_ typeList: [NameUrlModel])
 }
 
-final class PKListInteractor: PKListInteractorInputProtocol {
+final class PKListInteractor {
     
     unowned var presenter: PKListInteractorOutputProtocol
     
     init(presenter: PKListInteractorOutputProtocol) {
         self.presenter = presenter
     }
-
+}
+//MARK: - Impliment Input Protocol
+extension PKListInteractor: PKListInteractorInputProtocol {
     func retrivePokemon() {
         PKService.getPokemonList { [weak self] responseModel in
             self?.presenter.didRetrivePokemons(responseModel, reinit: false)
@@ -36,7 +38,7 @@ final class PKListInteractor: PKListInteractorInputProtocol {
         PKService.getPokemonTypeList { [weak self] typeList in
             DispatchQueue.main.async {
                 self?.presenter.didRetriveType(typeList)
-            }   
+            }
         }
     }
     
@@ -44,7 +46,6 @@ final class PKListInteractor: PKListInteractorInputProtocol {
         PKService.getAllPokemonListByTypeId(typeId) { [weak self] pokemonList in
             let model = PokemonResponseModel(pokemonList: pokemonList, nextPage: nil)
             self?.presenter.didRetrivePokemons(model, reinit: true)
-            
         }
     }
     

@@ -16,6 +16,8 @@ struct PKService {
                 fetchPokemonDetail(pokemon.url) { pokemon in
                     pokemonList.append(pokemon)
                     asyncEmitter.leave()
+                } fail: {
+                    asyncEmitter.leave()
                 }
             }
 
@@ -43,6 +45,8 @@ struct PKService {
                     fetchPokemonDetail(pokemon.pokemon.url) { pokemon in
                         pokemonList.append(pokemon)
                         asyncEmitter.leave()
+                    } fail: {
+                        asyncEmitter.leave()
                     }
                 }
                 asyncEmitter.notify(queue: .main) {
@@ -55,7 +59,11 @@ struct PKService {
         }
     }
     
-    static func fetchPokemonDetail(_ url: String, completion: @escaping (PokemonModel) -> Void) {
+    static func fetchPokemonDetail(
+        _ url: String,
+        completion: @escaping (PokemonModel) -> Void,
+        fail: @escaping () -> Void
+    ) {
         PKNetworkManager.shared.requestByModel(url, excpecting: PokemonModel.self) { result in
             switch result {
             case .success(let pokemonModel):
@@ -63,6 +71,7 @@ struct PKService {
             case .failure(let failure):
                 print(url)
                 print(failure)
+                fail()
             }
         }
     }

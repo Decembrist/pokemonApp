@@ -16,4 +16,8 @@ class CustomLabel: UILabel {
         let sz = super.intrinsicContentSize
         return CGSize(width: sz.width + padding.left + padding.right, height: sz.height + padding.top + padding.bottom)
     }
+    
+//    override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+//        bounds.inset(by: UIEdgeInsets)
+//    }
 }

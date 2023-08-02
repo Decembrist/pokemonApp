@@ -34,7 +34,7 @@ final class PKListPresenter: PKListPresenterProtocol {
         viewController = view
     }
 }
-/// ListView
+//MARK: - ListView
 extension PKListPresenter {
     func showPokemonDetail(_ pokemon: PokemonModel) {
         HapticsManager.shared.selectionVibrate()
@@ -53,7 +53,7 @@ extension PKListPresenter {
         interactor?.retriveType()
     }
 }
-/// FilterView
+//MARK: - FilterView
 extension PKListPresenter {
     func selectFilter(_ typeId: Int) {
         HapticsManager.shared.selectionVibrate()
@@ -77,7 +77,7 @@ extension PKListPresenter {
         interactor?.clearFilter()
     }
 }
-/// LoaderView
+//MARK: - LoaderView
 extension PKListPresenter {
     func startLoader() {
         viewController.toggleShowTabBar(hide: true)
@@ -88,7 +88,7 @@ extension PKListPresenter {
         viewController.stop()
     }
 }
-
+//MARK: - Output Protocol
 extension PKListPresenter: PKListInteractorOutputProtocol {
     func didRetrivePokemons(_ response: PokemonResponseModel, reinit: Bool) {
         PKPager.pokemonNextPage = response.nextPage

@@ -1,5 +1,6 @@
 import UIKit
 
+//MARK: - ViewProtocol
 protocol PKListViewProtocol: AnyObject {
     func pushToDetail(with pokemon: PokemonModel)
     func showPokemonList(_ pokemonList: [PokemonModel])
@@ -31,7 +32,7 @@ final class PKListView: UIView {
         layout.minimumInteritemSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = PKColorType.background
+        collectionView.backgroundColor = PKColorTypeEnum.background.uiColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(
             PKListViewCell.self,
@@ -41,51 +42,22 @@ final class PKListView: UIView {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: PKFooterLoadingCollectionReusableView.identifire)
         
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
         return collectionView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = PKColorType.background
-        
-        setDelegate()
-        addSubview(collectionView)
-        addConstraint()
+        setUpView()
     }
-    
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-    private func setDelegate() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-    
-    private func addConstraint() {
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: topAnchor),
-            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
-            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
-    }
-    
-    public func setPokemonList(_ pokemonList: [PokemonModel]) {
-        self.pokemonList = pokemonList
-    }
-    
-    public func setIndicatorValue(_ value: Bool) {
-        self.showIndicatorLoader = value
-    }
-    
-    public func scrollToTop(_ animated: Bool) {
-        collectionView.setContentOffset(.zero, animated: animated)
-    }
-    
 }
-
+//MARK: - Delegate
 extension PKListView: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -154,5 +126,40 @@ extension PKListView: UICollectionViewDelegateFlowLayout, UICollectionViewDelega
         let width = (bounds.width / 2) - 10
         
         return CGSize(width: width, height: 100) // create enum
+    }
+}
+//MARK: - Public Functions
+extension PKListView {
+    public func setPokemonList(_ pokemonList: [PokemonModel]) {
+        self.pokemonList = pokemonList
+    }
+    
+    public func setIndicatorValue(_ value: Bool) {
+        self.showIndicatorLoader = value
+    }
+    
+    public func scrollToTop(_ animated: Bool) {
+        collectionView.setContentOffset(.zero, animated: animated)
+    }
+}
+//MARK: - SetUp View
+private extension PKListView {
+    func setUpView() {
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = PKColorTypeEnum.background.uiColor
+        
+        addSubview(collectionView)
+        addConstraint()
+    }
+}
+//MARK: - Add Constraints
+private extension PKListView {
+    func addConstraint() {
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
     }
 }
